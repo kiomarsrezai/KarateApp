@@ -1,5 +1,15 @@
+import { Banner } from "./Banner";
+import { Clubs } from "./Clubs";
+
 const HomePage = () => {
-  return <div>Salam</div>;
+  return (
+    <>
+      <Banner />
+      <div className="mt-10">
+        <Clubs />
+      </div>
+    </>
+  );
 };
 
 export default HomePage;
