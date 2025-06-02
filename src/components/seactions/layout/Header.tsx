@@ -1,10 +1,10 @@
 "use client";
 
-import { InstagramIcon } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { InstagramIcon, LucideIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import { usePathname } from "next/navigation";
 import { cn } from "~/lib/utils";
+import Link from "next/link";
 
 // menu components
 type MenuItemShape = {
@@ -77,7 +77,7 @@ const User = () => {
 
 // social media components
 type SocialMediaShape = {
-  icon: any; // TODO: change this to image url
+  icon: LucideIcon; // TODO: change this to image url
 };
 
 const SocialMediaItem = ({ icon: Icon }: SocialMediaShape) => {
@@ -102,6 +102,7 @@ const SocialMedia = () => {
   );
 };
 
+// the header
 export const Header = () => {
   return (
     <header className="flex items-center gap-x-10 bg-black text-white p-4">
