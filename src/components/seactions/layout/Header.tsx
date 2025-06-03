@@ -20,7 +20,7 @@ const HeaderMenuItem = ({ link, text }: MenuItemShape) => {
     <li>
       <Link
         className={cn({
-          underline: isActive,
+          "underline text-primary": isActive,
         })}
         href={link}
       >
@@ -46,7 +46,7 @@ const HeaderMenu = () => {
     },
     {
       link: "/4",
-      text: "لیست باشکاه ها",
+      text: "لیست باشگاه ها",
     },
     {
       link: "/5",
@@ -69,8 +69,8 @@ const HeaderMenu = () => {
 // user components
 const User = () => {
   return (
-    <Button asChild>
-      <Link href={"/"}>ورود به پنل</Link>
+    <Button asChild className="px-10 rounded-full">
+      <Link href={"/"}>ورود به پنل کاربری</Link>
     </Button>
   );
 };
@@ -83,9 +83,11 @@ type SocialMediaShape = {
 const SocialMediaItem = ({ icon: Icon }: SocialMediaShape) => {
   return (
     <li>
-      <a href="http://google.com" target="_blank">
-        <Icon />
-      </a>
+      <Button asChild>
+        <a href="http://google.com" target="_blank" className="!size-9">
+          <Icon className="size-[25px]" />
+        </a>
+      </Button>
     </li>
   );
 };
@@ -94,7 +96,7 @@ const SocialMedia = () => {
   const socialMedia: SocialMediaShape[] = [{ icon: InstagramIcon }];
 
   return (
-    <ul>
+    <ul className="me-2">
       {socialMedia.map((item, i) => (
         <SocialMediaItem key={i} icon={item.icon} />
       ))}
@@ -105,7 +107,7 @@ const SocialMedia = () => {
 // the header
 export const Header = () => {
   return (
-    <header className="flex items-center gap-x-10 bg-black text-white p-4">
+    <header className="flex items-center bg-black text-white p-4">
       <HeaderMenu />
       <span className="flex-1"></span>
       <SocialMedia />
