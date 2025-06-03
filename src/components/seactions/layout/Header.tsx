@@ -107,7 +107,7 @@ const SocialMedia = () => {
 // the header
 export const Header = () => {
   return (
-    <header className="flex items-center bg-black text-white p-4">
+    <header className="flex items-center bg-layer text-layer-foreground p-4">
       <HeaderMenu />
       <span className="flex-1"></span>
       <SocialMedia />
