@@ -1,18 +1,41 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "~/components/ui/carousel";
+import { cn } from "~/lib/utils";
 
 export const Gallery = () => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const count = 5;
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+    setCurrent(api.selectedScrollSnap() + 1);
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
   return (
-    <Carousel className="w-full" opts={{ direction: "rtl" }}>
+    <Carousel
+      className="w-full select-none"
+      opts={{ direction: "rtl", loop: true }}
+      setApi={setApi}
+    >
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: count }).map((_, index) => (
           <CarouselItem key={index}>
             <Card className="h-[600px] max-h-screen p-0 relative">
               <Image
@@ -52,6 +75,21 @@ export const Gallery = () => {
           </CarouselItem>
         ))}
       </CarouselContent>
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
+        <ul className="flex gap-x-3">
+          {Array.from({ length: count })
+            .fill(null)
+            .map((_, i) => (
+              <li key={i}>
+                <div
+                  className={cn("size-3 rounded-full bg-white", {
+                    "bg-primary": current === i + 1,
+                  })}
+                ></div>
+              </li>
+            ))}
+        </ul>
+      </div>
     </Carousel>
   );
 };
