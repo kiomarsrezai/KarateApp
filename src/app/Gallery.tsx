@@ -14,6 +14,7 @@ import {
 import { cn } from "~/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
+import { Logo } from "~/components/common/Logo";
 
 export const Gallery = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -54,7 +55,7 @@ export const Gallery = () => {
               <div className="absolute left-1/2 top-1/2 -translate-1/2 w-full">
                 <div className="flex items-center">
                   <div className="h-[6px] flex-1 rounded-e-full"></div>
-                  <div className="font-bold text-[40px] text-nowrap px-10 text-white">
+                  <div className="font-bold text-[40px] text-nowrap px-10 text-white leading-3">
                     انجمن شیتوریو کاراته دو ایران
                   </div>
                   <div className="h-[6px] w-1/2 rounded-s-full"></div>
@@ -93,6 +94,10 @@ export const Gallery = () => {
               </li>
             ))}
         </ul>
+      </div>
+
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3">
+        <Logo className="w-40" />
       </div>
     </Carousel>
   );

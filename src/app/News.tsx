@@ -1,25 +1,28 @@
 import Image from "next/image";
+import Link from "next/link";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { Card } from "~/components/ui/card";
 
 const NewsItem = () => {
   return (
-    <Card className="relative p-0 overflow-hidden">
-      <AspectRatio ratio={16 / 9}>
-        <Image
-          src={
-            "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
-          alt="club"
-          width={200}
-          height={200}
-          className="w-full"
-        />
-      </AspectRatio>
-      <div className="flex absolute left-1/2 top-1/2 size-full -translate-1/2 bg-black/30 justify-center items-center text-white">
-        <strong className="text-lg">تیتر خبر</strong>
-      </div>
-    </Card>
+    <Link href={"/"}>
+      <Card className="relative p-0 overflow-hidden shadow-none">
+        <AspectRatio ratio={16 / 9}>
+          <Image
+            src={
+              "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            }
+            alt="club"
+            width={200}
+            height={200}
+            className="w-full"
+          />
+        </AspectRatio>
+        <div className="flex absolute left-1/2 top-1/2 size-full -translate-1/2 bg-black/30 justify-center items-center text-white">
+          <strong className="text-lg">تیتر خبر</strong>
+        </div>
+      </Card>
+    </Link>
   );
 };
 

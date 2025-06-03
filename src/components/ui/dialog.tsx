@@ -68,10 +68,10 @@ const DialogCloseIcon = ({
 function DialogContent({
   className,
   children,
-  hideClose,
+  showCloseButton,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
-  hideClose?: boolean;
+  showCloseButton?: boolean;
 }) {
   return (
     <DialogPortal data-slot="dialog-portal">
@@ -88,7 +88,7 @@ function DialogContent({
         {...props}
       >
         {children}
-        {!hideClose && <DialogCloseIcon />}
+        {!showCloseButton && <DialogCloseIcon />}
       </DialogPrimitive.Content>
     </DialogPortal>
   );

@@ -1,4 +1,7 @@
+"use client";
+
 import {
+  CopyrightIcon,
   InstagramIcon,
   LucideIcon,
   MailIcon,
@@ -6,7 +9,9 @@ import {
   PinIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Logo } from "~/components/common/Logo";
+import { cn } from "~/lib/utils";
 
 // menu components
 type MenuItemShape = {
@@ -15,9 +20,19 @@ type MenuItemShape = {
 };
 
 const MenuListItem = ({ link, text }: MenuItemShape) => {
+  const pathname = usePathname();
+  const isActive = pathname === link;
+
   return (
     <li>
-      <Link href={link}>{text}</Link>
+      <Link
+        className={cn({
+          "underline text-primary": isActive,
+        })}
+        href={link}
+      >
+        {text}
+      </Link>
     </li>
   );
 };
@@ -29,29 +44,29 @@ const MenuList = () => {
       text: "صفحه اصلی",
     },
     {
-      link: "/",
+      link: "/2",
       text: "تماس با ما",
     },
     {
-      link: "/",
+      link: "/3",
       text: "درباره ما",
     },
     {
-      link: "/",
+      link: "/4",
       text: "لیست باشگاه ها",
     },
     {
-      link: "/",
+      link: "/5",
       text: "اخبار",
     },
     {
-      link: "/",
+      link: "/6",
       text: "آموزش",
     },
   ];
 
   return (
-    <ul className="flex flex-col gap-y-4">
+    <ul className="flex flex-col gap-y-5">
       {menuItems.map((item, i) => (
         <MenuListItem key={i} link={item.link} text={item.text} />
       ))}
@@ -68,9 +83,9 @@ type AddressItemShape = {
 const AddressListItem = ({ icon: Icon, text }: AddressItemShape) => {
   return (
     <li>
-      <div className="flex">
-        <Icon />
-        {text}
+      <div className="flex gap-x-10 items-center justify-end">
+        <span>{text}</span>
+        <Icon className="shrink-0 fill-layer-foreground stroke-layer" />
       </div>
     </li>
   );
@@ -84,7 +99,7 @@ const AddressList = () => {
     },
     {
       icon: InstagramIcon,
-      text: "@instagram",
+      text: "",
     },
     {
       icon: PinIcon,
@@ -97,7 +112,7 @@ const AddressList = () => {
   ];
 
   return (
-    <ul className="flex flex-col gap-y-4">
+    <ul className="flex flex-col gap-y-6">
       {addressItems.map((item, i) => (
         <AddressListItem key={i} icon={item.icon} text={item.text} />
       ))}
@@ -108,10 +123,20 @@ const AddressList = () => {
 // the footer
 export const Footer = () => {
   return (
-    <footer className="grid grid-cols-3 bg-black text-white pt-10">
-      <MenuList />
-      <AddressList />
-      <Logo />
+    <footer className="bg-layer text-layer-foreground pt-10">
+      <div className="flex gap-x-10 container mx-auto">
+        <MenuList />
+        <span className="flex-1"></span>
+        <div className="w-[500px]">
+          <AddressList />
+        </div>
+        <Logo className="size-[260px]" />
+      </div>
+
+      <div className="text-center py-10 pb-4">
+        <CopyrightIcon className="size-4 inline" /> تمام حقوق این سایت متعلق به
+        انجمن شیتوریو کاراته دو ایران میباشد
+      </div>
     </footer>
   );
 };
