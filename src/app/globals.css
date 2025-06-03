@@ -127,4 +127,8 @@
   button {
     @apply cursor-pointer;
   }
+
+  .container {
+    @apply px-10;
+  }
 }
