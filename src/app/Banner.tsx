@@ -17,9 +17,9 @@ type ArtItemProps = {
 const ArtItem = ({ side }: ArtItemProps) => {
   const imageUrl =
     side == "Right"
-      ? `/art/art-${side}-side.jpg`
+      ? `/art/art-right-side.jpg`
       : side === "Left"
-      ? `/art/art-${side}-side.jpg`
+      ? `/art/art-left-side.jpg`
       : null;
 
   if (!imageUrl) return null;
