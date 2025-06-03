@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
-import { Card, CardContent } from "~/components/ui/card";
+import { Card } from "~/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -25,12 +25,28 @@ export const Gallery = () => {
                 className="size-full object-cover object-center"
               />
 
-              <div className="absolute left-1/2 top-1/2 -translate-1/2">
-                <div>انجمن شیتوریو کاراته دو ایران</div>
-                <div>میراثی کهن، قدرتی نوین</div>
-                <Button asChild>
-                  <Link href={"/"}>ثبت نام در کلاس های آموزشی</Link>
-                </Button>
+              <div className="absolute left-1/2 top-1/2 -translate-1/2 w-full">
+                <div className="flex items-center">
+                  <div className="h-[6px] flex-1 rounded-e-full"></div>
+                  <div className="font-bold text-[40px] text-nowrap px-10 text-white">
+                    انجمن شیتوریو کاراته دو ایران
+                  </div>
+                  <div className="h-[6px] w-1/2 rounded-s-full"></div>
+                </div>
+                <div className="flex items-center">
+                  <div className="h-[6px] bg-primary w-1/2 rounded-e-full"></div>
+                  <div className="font-bold text-[40px] text-nowrap px-10 text-white">
+                    میراثی کهن، قدرتی نوین
+                  </div>
+                  <div className="h-[6px] bg-primary flex-1 rounded-s-full"></div>
+                </div>
+                <div className="flex justify-center mt-8">
+                  <Button asChild>
+                    <Link className="w-1/2 rounded-full" href={"/"}>
+                      ثبت نام در کلاس های آموزشی
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </Card>
           </CarouselItem>
