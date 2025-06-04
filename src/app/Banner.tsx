@@ -1,5 +1,5 @@
 import { InfoIcon, ShieldCheckIcon } from "lucide-react";
-import Image from "next/image";
+import { ArtDesign } from "~/components/seactions/ArtDesign";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -9,23 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-
-type ArtItemProps = {
-  side: "Left" | "Right";
-};
-
-const ArtItem = ({ side }: ArtItemProps) => {
-  const imageUrl =
-    side == "Right"
-      ? `/art/art-right-side.jpg`
-      : side === "Left"
-      ? `/art/art-left-side.jpg`
-      : null;
-
-  if (!imageUrl) return null;
-
-  return <Image src={imageUrl} alt="art right side" width={240} height={240} />;
-};
 
 // feature components
 const FeaturesContent = () => {
@@ -81,11 +64,11 @@ const BannerContent = () => {
 export const Banner = () => {
   return (
     <section className="bg-layer text-layer-foreground flex items-center justify-between rounded-2xl overflow-hidden py-10 -mt-4 relative">
-      <ArtItem side="Right" />
+      <ArtDesign side="Right" />
 
       <BannerContent />
 
-      <ArtItem side="Left" />
+      <ArtDesign side="Left" />
     </section>
   );
 };

@@ -51,7 +51,11 @@ export const PhoneNumberForm = ({ onNext }: PhoneNumberFormProps) => {
             <FormItem>
               <FormLabel>شماره موبایل</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  placeholder="09 - - - - - - - - -"
+                  dir="ltr"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

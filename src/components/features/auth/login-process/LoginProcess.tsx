@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PhoneNumberForm } from "./PhoneNumberForm";
 import { OtpForm } from "./OtpForm";
+import { UserInfoForm } from "./UserInfoForm";
 
 type Step = 1 | 2 | 3;
 const LoginProcess = () => {
@@ -17,7 +18,7 @@ const LoginProcess = () => {
   > = {
     "1": PhoneNumberForm,
     "2": OtpForm,
-    "3": PhoneNumberForm,
+    "3": UserInfoForm,
   };
 
   const ActiveForm = forms[step];

@@ -16,6 +16,7 @@ import {
 } from "~/components/ui/dialog";
 import LoginProcess from "~/components/features/auth/login-process/LoginProcess";
 import { Separator } from "~/components/ui/separator";
+import { ArtDesign } from "../ArtDesign";
 
 // menu components
 type MenuItemShape = {
@@ -99,6 +100,12 @@ const User = () => {
         <Link href={"/"}>ورود به پنل کاربری</Link>
       </Button>
       <DialogContent className="!max-w-[calc(100vw-100px)] !h-[calc(100vh-100px)] bg-layer text-layer-foreground border-border/30">
+        <div className="absolute left-10 bottom-10 opacity-30">
+          <ArtDesign side="Left" />
+        </div>
+        <div className="absolute right-10 top-10 opacity-30">
+          <ArtDesign side="Right" />
+        </div>
         <DialogHeader>
           <DialogTitle className="font-medium">
             <div className="flex justify-center items-center gap-x-6">
