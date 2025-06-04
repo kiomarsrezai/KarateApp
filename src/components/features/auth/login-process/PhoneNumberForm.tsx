@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
@@ -49,7 +50,9 @@ export const PhoneNumberForm = ({ onNext }: PhoneNumberFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>شماره موبایل</FormLabel>
-              <Input {...field} />
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
