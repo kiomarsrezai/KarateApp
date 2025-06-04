@@ -5,6 +5,7 @@ import { Button } from "~/components/ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "~/lib/utils";
 import Link from "next/link";
+import { Logo } from "~/components/common/Logo";
 
 // menu components
 type MenuItemShape = {
@@ -107,12 +108,16 @@ const SocialMedia = () => {
 // the header
 export const Header = () => {
   return (
-    <header className="bg-layer text-layer-foreground">
-      <div className="flex items-center py-4 container mx-auto">
+    <header className="bg-layer text-layer-foreground relative z-50">
+      <div className="flex items-center py-4 container">
         <HeaderMenu />
         <span className="flex-1"></span>
         <SocialMedia />
         <User />
+      </div>
+
+      <div className="absolute left-1/2 top-4 -translate-x-1/2">
+        <Logo className="w-40" />
       </div>
     </header>
   );

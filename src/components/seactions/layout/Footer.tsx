@@ -84,7 +84,7 @@ const AddressListItem = ({ icon: Icon, text }: AddressItemShape) => {
   return (
     <li>
       <div className="flex gap-x-10 items-center justify-end">
-        <span>{text}</span>
+        <span className="text-left">{text}</span>
         <Icon className="shrink-0 fill-layer-foreground stroke-layer" />
       </div>
     </li>
@@ -124,7 +124,7 @@ const AddressList = () => {
 export const Footer = () => {
   return (
     <footer className="bg-layer text-layer-foreground pt-10">
-      <div className="flex gap-x-10 container mx-auto">
+      <div className="flex gap-x-10 container">
         <MenuList />
         <span className="flex-1"></span>
         <div className="w-[500px]">

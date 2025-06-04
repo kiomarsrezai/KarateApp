@@ -8,10 +8,10 @@ const HomePage = () => {
     <>
       <Gallery />
       <Banner />
-      <div className="mt-10 container mx-auto">
+      <div className="mt-10 container">
         <Clubs />
       </div>
-      <div className="mt-10 container mx-auto mb-16">
+      <div className="mt-10 container mb-16">
         <News />
       </div>
     </>

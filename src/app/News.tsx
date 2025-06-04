@@ -5,7 +5,7 @@ import { Card } from "~/components/ui/card";
 
 const NewsItem = () => {
   return (
-    <Link href={"/"}>
+    <Link href={"/news/1"}>
       <Card className="relative p-0 overflow-hidden shadow-none">
         <AspectRatio ratio={16 / 9}>
           <Image

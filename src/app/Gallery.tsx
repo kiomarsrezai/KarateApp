@@ -14,7 +14,6 @@ import {
 import { cn } from "~/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
-import { Logo } from "~/components/common/Logo";
 
 export const Gallery = () => {
   const [api, setApi] = useState<CarouselApi>();
@@ -94,10 +93,6 @@ export const Gallery = () => {
               </li>
             ))}
         </ul>
-      </div>
-
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3">
-        <Logo className="w-40" />
       </div>
     </Carousel>
   );
