@@ -30,7 +30,7 @@ const Club = () => {
 
         <div className="flex justify-center mt-10 mb-1">
           <Button asChild variant={"ghost"}>
-            <Link href={"/"} className="!text-primary text-sm">
+            <Link href={"/clubs/1"} className="!text-primary text-sm">
               اطلاعات بیشتر
               <ArrowLeftIcon />
             </Link>
