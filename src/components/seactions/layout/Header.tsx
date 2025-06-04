@@ -6,6 +6,16 @@ import { usePathname } from "next/navigation";
 import { cn } from "~/lib/utils";
 import Link from "next/link";
 import { Logo } from "~/components/common/Logo";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogMainSection,
+  DialogTitle,
+} from "~/components/ui/dialog";
+import LoginProcess from "~/components/features/auth/login-process/LoginProcess";
+import { Separator } from "~/components/ui/separator";
 
 // menu components
 type MenuItemShape = {
@@ -73,10 +83,41 @@ const HeaderMenu = () => {
 
 // user components
 const User = () => {
+  const isLogin = false;
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const onClick = () => {
+    if (isLogin) {
+      // navigate
+    } else {
+      setDialogOpen(true);
+    }
+  };
   return (
-    <Button asChild className="px-10 rounded-full">
-      <Link href={"/"}>ورود به پنل کاربری</Link>
-    </Button>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <Button asChild className="px-10 rounded-full" onClick={onClick}>
+        <Link href={"/"}>ورود به پنل کاربری</Link>
+      </Button>
+      <DialogContent className="!max-w-[calc(100vw-100px)] !h-[calc(100vh-100px)] bg-layer text-layer-foreground border-border/30">
+        <DialogHeader>
+          <DialogTitle className="font-medium">
+            <div className="flex justify-center items-center gap-x-6">
+              <p className="text-primary">ورود</p>
+              <Separator
+                orientation="vertical"
+                className="!h-8 !w-0.5 rounded-full"
+              />
+              <p className="text-layer-foreground">ثبت نام</p>
+            </div>
+          </DialogTitle>
+        </DialogHeader>
+        <DialogMainSection>
+          <div className="max-w-1/2 mx-auto pt-10">
+            <LoginProcess />
+          </div>
+        </DialogMainSection>
+      </DialogContent>
+    </Dialog>
   );
 };
 
