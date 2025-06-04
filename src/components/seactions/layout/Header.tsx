@@ -54,6 +54,10 @@ const HeaderMenu = () => {
       text: "درباره ما",
     },
     {
+      link: "/board",
+      text: "هیئت رئیسه",
+    },
+    {
       link: "/6",
       text: "تماس با ما",
     },
