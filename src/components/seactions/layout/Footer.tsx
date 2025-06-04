@@ -5,8 +5,8 @@ import {
   InstagramIcon,
   LucideIcon,
   MailIcon,
+  MapPinIcon,
   PhoneIcon,
-  PinIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -27,7 +27,7 @@ const MenuListItem = ({ link, text }: MenuItemShape) => {
     <li>
       <Link
         className={cn({
-          "underline text-primary": isActive,
+          "border-b border-primary text-primary": isActive,
         })}
         href={link}
       >
@@ -83,9 +83,9 @@ type AddressItemShape = {
 const AddressListItem = ({ icon: Icon, text }: AddressItemShape) => {
   return (
     <li>
-      <div className="flex gap-x-10 items-center justify-end">
+      <div className="flex gap-x-5 items-center justify-end">
         <span className="text-left">{text}</span>
-        <Icon className="shrink-0 fill-layer-foreground stroke-layer" />
+        <Icon className="shrink-0 size-5" />
       </div>
     </li>
   );
@@ -102,7 +102,7 @@ const AddressList = () => {
       text: "",
     },
     {
-      icon: PinIcon,
+      icon: MapPinIcon,
       text: "نشانی دفتر مرکزی: تهران – میدان هفتم تیر – پائین تر از مسجد الجواد – خیابان مانی – پلاک 28 -  موسسه فرهنگی هنری قرن 21",
     },
     {

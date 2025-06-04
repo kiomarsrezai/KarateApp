@@ -21,7 +21,7 @@ const HeaderMenuItem = ({ link, text }: MenuItemShape) => {
     <li>
       <Link
         className={cn({
-          "underline text-primary": isActive,
+          "border-b border-primary text-primary": isActive,
         })}
         href={link}
       >
