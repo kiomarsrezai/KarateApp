@@ -1,12 +1,12 @@
 "use client";
 
-import { InstagramIcon, LucideIcon } from "lucide-react";
+import { InstagramIcon, LucideIcon, MenuIcon, UserIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { usePathname } from "next/navigation";
 import { cn } from "~/lib/utils";
 import Link from "next/link";
 import { Logo } from "~/components/common/Logo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -17,6 +17,12 @@ import {
 import LoginProcess from "~/components/features/auth/login-process/LoginProcess";
 import { Separator } from "~/components/ui/separator";
 import { ArtDesign } from "../ArtDesign";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+} from "~/components/ui/sheet";
 
 // menu components
 type MenuItemShape = {
@@ -74,7 +80,7 @@ const HeaderMenu = () => {
     },
   ];
   return (
-    <ul className="flex items-center gap-x-6">
+    <ul className="flex flex-col md:flex-row items-center gap-6">
       {menuItems.map((menuItem, i) => (
         <HeaderMenuItem key={i} text={menuItem.text} link={menuItem.link} />
       ))}
@@ -96,8 +102,12 @@ const User = () => {
   };
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Button className="px-10 rounded-full" onClick={onClick}>
-        ورود به پنل کاربری
+      <Button
+        className="size-8 bg-white md:bg-primary text-black md:text-primary-foreground md:px-10 rounded-full"
+        onClick={onClick}
+      >
+        <span className="hidden md:block">ورود به پنل کاربری</span>
+        <UserIcon className="size-4 md:hiiden" />
       </Button>
       <DialogContent className="!max-w-[calc(100vw-100px)] !h-[calc(100vh-100px)] bg-layer text-layer-foreground border-border/30">
         <div className="absolute left-10 bottom-10 opacity-30">
@@ -157,19 +167,45 @@ const SocialMedia = () => {
   );
 };
 
+// mobile
+const SheetMenu = () => {
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger className="md:hidden">
+        <MenuIcon className="size-4" />
+      </SheetTrigger>
+      <SheetContent className="bg-layer text-layer-foreground border-layer-foreground/40">
+        <SheetHeader />
+        <HeaderMenu />
+      </SheetContent>
+    </Sheet>
+  );
+};
+
 // the header
 export const Header = () => {
   return (
     <header className="bg-layer text-layer-foreground z-50 sticky top-0">
       <div className="flex items-center py-4 container">
-        <HeaderMenu />
+        <SheetMenu />
+        <div className="hidden md:block">
+          <HeaderMenu />
+        </div>
         <span className="flex-1"></span>
-        <SocialMedia />
+        <div className="hidden md:block">
+          <SocialMedia />
+        </div>
         <User />
       </div>
 
-      <div className="absolute left-1/2 top-4 -translate-x-1/2">
-        <Logo className="w-40" />
+      <div className="absolute left-1/2 top-1/2 -translate-y-1/2 md:-translate-y-0 md:top-4 -translate-x-1/2">
+        <Logo className="w-10 md:w-40" />
       </div>
     </header>
   );
