@@ -14,23 +14,30 @@ import {
   minLength,
   check,
   length,
+  picklist,
   array,
-  enum_,
 } from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 import { UploadIcon } from "lucide-react";
+import { Checkbox } from "~/components/ui/checkbox";
 
-enum Role {
-  "Player",
-  "Referee",
-  "Coach",
-}
+const roles = [
+  {
+    value: "Player",
+    label: "ورزشکار",
+  },
+  { value: "Coach", label: "مربی" },
+  { value: "Referee", label: "داور" },
+] as const;
 
 const FormSchema = object({
-  roles: array(enum_(Role)),
+  roles: pipe(
+    array(picklist(roles.map((role) => role.value))),
+    minLength(1, "حداقل یه مورد را انتخاب کنید")
+  ),
   name: pipe(string(), minLength(1, "نام و نام خانوادگی ضروری است")),
   father: pipe(string(), minLength(1, "نام پدر ضروری است")),
   phoneNumber: pipe(
@@ -89,6 +96,38 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={onSubmit} className="flex flex-col gap-y-6">
+        <FormField
+          name="roles"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex gap-x-4">
+                {roles.map((item) => (
+                  <FormLabel key={item.value}>
+                    <span>{item.label}</span>
+
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value?.includes(item.value)}
+                        onCheckedChange={(checked) => {
+                          return checked
+                            ? field.onChange([...field.value, item.value])
+                            : field.onChange(
+                                field.value?.filter(
+                                  (value) => value !== item.value
+                                )
+                              );
+                        }}
+                      />
+                    </FormControl>
+                  </FormLabel>
+                ))}
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           name="name"
           control={form.control}
