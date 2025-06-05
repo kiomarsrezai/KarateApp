@@ -51,17 +51,17 @@ export const Gallery = () => {
                 className="size-full object-cover object-center"
               />
 
-              <div className="absolute left-1/2 top-1/2 -translate-1/2 w-full">
+              <div className="absolute left-1/2 top-1/2 -translate-1/2 w-full flex flex-col max-md:gap-y-6">
                 <div className="flex items-center">
-                  <div className="h-[6px] flex-1 rounded-e-full"></div>
-                  <div className="font-bold text-[40px] text-nowrap px-10 text-white leading-3">
+                  <div className="h-[6px] flex-1 rounded-e-full bg-primary md:bg-transparent"></div>
+                  <div className="font-bold md:text-[40px] text-nowrap px-10 text-white leading-3">
                     انجمن شیتوریو کاراته دو ایران
                   </div>
-                  <div className="h-[6px] w-1/2 rounded-s-full"></div>
+                  <div className="hidden md:block h-[6px] w-1/2 rounded-s-full"></div>
                 </div>
                 <div className="flex items-center">
-                  <div className="h-[6px] bg-primary w-1/2 rounded-e-full"></div>
-                  <div className="font-bold text-[40px] text-nowrap px-10 text-white">
+                  <div className="hidden md:block h-[6px] bg-primary w-1/2 rounded-e-full"></div>
+                  <div className="font-bold md:text-[40px] text-nowrap px-10 text-white">
                     میراثی کهن، قدرتی نوین
                   </div>
                   <div className="h-[6px] bg-primary flex-1 rounded-s-full"></div>
