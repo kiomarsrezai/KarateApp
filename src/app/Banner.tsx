@@ -44,13 +44,15 @@ const FeaturesContent = () => {
 
 const BannerContent = () => {
   return (
-    <div className="flex flex-col gap-y-12">
-      <p className="text-[30px]">پنل کاربری به زودی در دسترس قرار خواهد گرفت</p>
+    <div className="flex flex-col gap-y-12 relative">
+      <p className="text-center md:text-[30px]">
+        پنل کاربری به زودی در دسترس قرار خواهد گرفت
+      </p>
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="rounded-full !bg-[#F5E8C7] !text-black">
-            <InfoIcon className="me-2 fill-black stroke-[#F5E8C7] size-5" />
+          <Button className="rounded-full md:!bg-[#F5E8C7] md:!text-black">
+            <InfoIcon className="me-2 md:fill-black md:stroke-[#F5E8C7] size-5" />
             مشاهده لیست خدمات سایت انجمن
           </Button>
         </DialogTrigger>
@@ -63,12 +65,16 @@ const BannerContent = () => {
 
 export const Banner = () => {
   return (
-    <section className="bg-layer text-layer-foreground flex items-center justify-between rounded-2xl overflow-hidden py-10 -mt-4 relative">
-      <ArtDesign side="Right" />
+    <section className="bg-layer text-layer-foreground flex items-center justify-center rounded-2xl overflow-hidden py-10 -mt-4 relative min-h-80">
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 max-md:opacity-30">
+        <ArtDesign side="Right" />
+      </div>
+
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 max-md:opacity-30">
+        <ArtDesign side="Left" />
+      </div>
 
       <BannerContent />
-
-      <ArtDesign side="Left" />
     </section>
   );
 };
