@@ -38,7 +38,7 @@ type MenuItemShape = {
   icon: LucideIcon;
 };
 
-const PlayerSidebarMenuItem = ({ icon: Icon, path, text }: MenuItemShape) => {
+const CoachSidebarMenuItem = ({ icon: Icon, path, text }: MenuItemShape) => {
   return (
     <Collapsible asChild defaultOpen={false} className="group/collapsible">
       <SidebarMenuItem>
@@ -55,7 +55,7 @@ const PlayerSidebarMenuItem = ({ icon: Icon, path, text }: MenuItemShape) => {
   );
 };
 
-const PlayerSidebarMenu = () => {
+const CoachSidebarMenu = () => {
   const items: MenuItemShape[] = [
     {
       text: "داشبورد",
@@ -88,19 +88,19 @@ const PlayerSidebarMenu = () => {
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item, i) => (
-          <PlayerSidebarMenuItem key={i} {...item} />
+          <CoachSidebarMenuItem key={i} {...item} />
         ))}
       </SidebarMenu>
     </SidebarGroup>
   );
 };
 
-const PlayerSidebarTrigger = () => {
+const CoachSidebarTrigger = () => {
   const { toggleSidebar, open } = useSidebar();
 
   return (
     <Button
-      className="absolute left-0 top-2 rounded-full -translate-x-2/3 size-5 !bg-player"
+      className="absolute left-0 top-2 rounded-full -translate-x-2/3 size-5 !bg-coach"
       size={"icon"}
       onClick={toggleSidebar}
     >
@@ -113,16 +113,16 @@ const PlayerSidebarTrigger = () => {
   );
 };
 
-const PlayerSidebarHeader = () => {
+const CoachSidebarHeader = () => {
   const { open } = useSidebar();
   if (!open) return null;
 
   return (
-    <SidebarHeader className="bg-player text-player-foreground flex-row">
+    <SidebarHeader className="bg-coach text-coach-foreground flex-row">
       <p className="text-xs">{'"نام کاربری"'}</p>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="bg-black/20 text-xs flex items-center gap-x-1 px-1">
-          <span>ورزشکار</span>
+          <span>مربی</span>
           <ChevronDownIcon className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -141,7 +141,7 @@ const PlayerSidebarHeader = () => {
   );
 };
 
-export const PlayerSidebar = () => {
+export const CoachSidebar = () => {
   return (
     <Sidebar
       side="right"
@@ -149,13 +149,13 @@ export const PlayerSidebar = () => {
       className="z-50 h-[calc(100%-70.5px)] bottom-0 top-auto"
       collapsible="icon"
     >
-      <PlayerSidebarHeader />
-      <SidebarContent className="bg-player text-player-foreground">
-        <PlayerSidebarMenu />
+      <CoachSidebarHeader />
+      <SidebarContent className="bg-coach text-coach-foreground">
+        <CoachSidebarMenu />
       </SidebarContent>
-      <SidebarFooter className="bg-player" />
+      <SidebarFooter className="bg-coach" />
 
-      <PlayerSidebarTrigger />
+      <CoachSidebarTrigger />
     </Sidebar>
   );
 };
