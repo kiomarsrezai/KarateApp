@@ -19,7 +19,7 @@ const NewsItem = () => {
           />
         </AspectRatio>
         <div className="flex absolute left-1/2 top-1/2 size-full -translate-1/2 bg-black/30 justify-center items-center text-white">
-          <strong className="text-lg">تیتر خبر</strong>
+          <strong className="md:text-lg">تیتر خبر</strong>
         </div>
       </Card>
     </Link>
@@ -30,7 +30,7 @@ export const News = () => {
   return (
     <section className="flex flex-col gap-y-8">
       <h3 className="text-center text-2xl font-bold">اخبار</h3>
-      <div className="grid grid-cols-3 gap-x-10">
+      <div className="grid md:grid-cols-3 gap-10">
         <NewsItem />
         <NewsItem />
         <NewsItem />

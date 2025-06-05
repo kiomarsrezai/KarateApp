@@ -133,7 +133,7 @@ export const Footer = () => {
         <Logo className="size-40 md:size-[260px] self-end md:self-start" />
       </div>
 
-      <div className="text-center py-10 pb-4">
+      <div className="text-center py-10 pb-4 text-xs md:text-base">
         <CopyrightIcon className="size-4 inline" /> تمام حقوق این سایت متعلق به
         انجمن شیتوریو کاراته دو ایران میباشد
       </div>
