@@ -124,13 +124,13 @@ const AddressList = () => {
 export const Footer = () => {
   return (
     <footer className="bg-layer text-layer-foreground pt-10">
-      <div className="flex gap-x-10 container">
+      <div className="flex gap-10 container">
         <MenuList />
         <span className="flex-1"></span>
-        <div className="w-[500px]">
+        <div className="hidden md:block w-[500px]">
           <AddressList />
         </div>
-        <Logo className="size-[260px]" />
+        <Logo className="size-40 md:size-[260px] self-end md:self-start" />
       </div>
 
       <div className="text-center py-10 pb-4">
