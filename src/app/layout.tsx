@@ -18,7 +18,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-1">{children}</main>
-            <div>
+            <div className="relative z-50">
               <Footer />
             </div>
           </div>

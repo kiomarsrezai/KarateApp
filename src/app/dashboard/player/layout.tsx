@@ -1,10 +1,15 @@
 import { PlayerSidebar } from "~/components/seactions/layout/player/PlayerSidebar";
-import { SidebarProvider } from "~/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 
-const PlayerLayout = () => {
+type PlayerLayoutProps = {
+  children: React.ReactNode;
+};
+
+const PlayerLayout = ({ children }: PlayerLayoutProps) => {
   return (
     <SidebarProvider>
       <PlayerSidebar />
+      <SidebarInset>{children}</SidebarInset>
     </SidebarProvider>
   );
 };

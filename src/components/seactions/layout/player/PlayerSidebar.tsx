@@ -145,6 +145,7 @@ export const PlayerSidebar = () => {
   return (
     <Sidebar
       side="right"
+      variant="sidebar"
       className="z-50 h-[calc(100%-70.5px)] bottom-0 top-auto"
       collapsible="icon"
     >
