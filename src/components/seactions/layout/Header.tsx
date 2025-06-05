@@ -216,7 +216,9 @@ export const Header = () => {
       </div>
 
       <div className="absolute left-1/2 top-1/2 -translate-y-1/2 md:-translate-y-0 md:top-4 -translate-x-1/2">
-        <Logo className="w-10 md:w-40" />
+        <Link href={"/"}>
+          <Logo className="w-10 md:w-40" />
+        </Link>
       </div>
     </header>
   );
