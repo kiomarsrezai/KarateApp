@@ -96,8 +96,8 @@ const User = () => {
   };
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <Button asChild className="px-10 rounded-full" onClick={onClick}>
-        <Link href={"/"}>ورود به پنل کاربری</Link>
+      <Button className="px-10 rounded-full" onClick={onClick}>
+        ورود به پنل کاربری
       </Button>
       <DialogContent className="!max-w-[calc(100vw-100px)] !h-[calc(100vh-100px)] bg-layer text-layer-foreground border-border/30">
         <div className="absolute left-10 bottom-10 opacity-30">
@@ -160,7 +160,7 @@ const SocialMedia = () => {
 // the header
 export const Header = () => {
   return (
-    <header className="bg-layer text-layer-foreground relative z-50">
+    <header className="bg-layer text-layer-foreground z-50 sticky top-0">
       <div className="flex items-center py-4 container">
         <HeaderMenu />
         <span className="flex-1"></span>

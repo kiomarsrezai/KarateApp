@@ -6,6 +6,8 @@
 @theme inline {
   --color-layer: var(--layer);
   --color-layer-foreground: var(--layer-foreground);
+  --color-player: var(--color-player);
+  --color-player-foreground: var(--color-player-foreground);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -49,6 +51,8 @@
   --radius: 0.625rem;
   --layer: oklch(0 0 0);
   --layer-foreground: oklch(1 0 0);
+  --color-player: #d72b3c;
+  --color-player-foreground: #fff;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
