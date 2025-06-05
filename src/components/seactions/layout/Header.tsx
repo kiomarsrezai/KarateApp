@@ -80,7 +80,7 @@ const HeaderMenu = () => {
     },
   ];
   return (
-    <ul className="flex flex-col md:flex-row items-center gap-6">
+    <ul className="flex flex-col md:flex-row md:items-center gap-6">
       {menuItems.map((menuItem, i) => (
         <HeaderMenuItem key={i} text={menuItem.text} link={menuItem.link} />
       ))}
@@ -103,11 +103,11 @@ const User = () => {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <Button
-        className="size-8 bg-white md:bg-primary text-black md:text-primary-foreground md:px-10 rounded-full"
+        className="max-md:size-8 bg-white md:bg-primary text-black md:text-primary-foreground md:!px-10 rounded-full"
         onClick={onClick}
       >
         <span className="hidden md:block">ورود به پنل کاربری</span>
-        <UserIcon className="size-4 md:hiiden" />
+        <UserIcon className="size-4 md:hidden" />
       </Button>
       <DialogContent className="!max-w-[calc(100vw-100px)] !h-[calc(100vh-100px)] bg-layer text-layer-foreground border-border/30">
         <div className="absolute left-10 bottom-10 opacity-30">
@@ -129,7 +129,7 @@ const User = () => {
           </DialogTitle>
         </DialogHeader>
         <DialogMainSection>
-          <div className="max-w-1/2 mx-auto pt-10">
+          <div className="md:max-w-1/2 mx-auto pt-10">
             <LoginProcess />
           </div>
         </DialogMainSection>
@@ -147,8 +147,12 @@ const SocialMediaItem = ({ icon: Icon }: SocialMediaShape) => {
   return (
     <li>
       <Button asChild>
-        <a href="http://google.com" target="_blank" className="!size-9">
-          <Icon className="size-[25px]" />
+        <a
+          href="http://google.com"
+          target="_blank"
+          className="!size-9 bg-transparent md:bg-primary"
+        >
+          <Icon className="size-4 md:size-[25px]" />
         </a>
       </Button>
     </li>
@@ -159,7 +163,7 @@ const SocialMedia = () => {
   const socialMedia: SocialMediaShape[] = [{ icon: InstagramIcon }];
 
   return (
-    <ul className="me-2">
+    <ul className="md:me-2">
       {socialMedia.map((item, i) => (
         <SocialMediaItem key={i} icon={item.icon} />
       ))}
@@ -180,9 +184,16 @@ const SheetMenu = () => {
       <SheetTrigger className="md:hidden">
         <MenuIcon className="size-4" />
       </SheetTrigger>
-      <SheetContent className="bg-layer text-layer-foreground border-layer-foreground/40">
+      <SheetContent className="bg-layer text-layer-foreground border-layer-foreground/40 pr-6">
         <SheetHeader />
         <HeaderMenu />
+
+        <div className="flex justify-end pl-3">
+          <SocialMedia />
+        </div>
+        <div className="opacity-40">
+          <ArtDesign side="Right" />
+        </div>
       </SheetContent>
     </Sheet>
   );

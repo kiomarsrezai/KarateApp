@@ -54,14 +54,14 @@ export const OtpForm = ({ onNext }: PhoneNumberFormProps) => {
               </div>
               <div dir="ltr" className="flex justify-center mt-4">
                 <InputOTP maxLength={6} {...field}>
-                  <InputOTPGroup className="gap-x-6">
+                  <InputOTPGroup className="md:gap-x-6">
                     {Array.from({ length: 6 })
                       .fill(null)
                       .map((_, i) => (
                         <InputOTPSlot
                           index={i}
                           key={i}
-                          className="border rounded-lg h-10"
+                          className="md:border md:rounded-lg h-10"
                         />
                       ))}
                   </InputOTPGroup>
