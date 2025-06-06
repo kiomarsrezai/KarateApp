@@ -130,7 +130,7 @@ const User = () => {
         </DialogHeader>
         <DialogMainSection>
           <div className="md:max-w-1/2 mx-auto pt-10">
-            <LoginProcess />
+            <LoginProcess onDone={() => setDialogOpen(false)} />
           </div>
         </DialogMainSection>
       </DialogContent>

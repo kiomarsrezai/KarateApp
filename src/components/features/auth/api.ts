@@ -1,4 +1,5 @@
 import { apiRequest } from "~/lib/api-request";
+import { useAuthStore } from "./login-process/useAuthStore";
 
 // send otp
 type SendOtpBody = {
@@ -33,11 +34,42 @@ export const verifyOtpApi = async (data: VerifyOtpBody) => {
   const res = apiRequest<VerifyOtpResult>("/User/verifyotp", {
     method: "POST",
     body: {
-      dto: {
-        phoneNumber: data.phoneNumber,
-        code: data.code,
-      },
+      dto: data,
     },
+  });
+
+  return res;
+};
+
+// complete profile
+type CompleteProfileBody = {
+  name: string;
+  family: string;
+  fatherName: string;
+  isMobileVerified: boolean;
+  nationalCode: string;
+  address: string;
+  pOstalCode: string;
+  phoneNumberFamily: string;
+  birthDay: string;
+  birthDate: Date;
+  cityId: number;
+  userType: number;
+  email: string;
+  password: string;
+  avatar: string;
+  rezumeFile: string;
+  selectedRoles: number[];
+};
+
+type CompleteProfileResult = {};
+
+export const completeProfileApi = async (data: CompleteProfileBody) => {
+  const authStore = useAuthStore.getState();
+  const res = apiRequest<CompleteProfileResult>("/User/completeprofile", {
+    method: "POST",
+    body: data,
+    forceToken: authStore.token ?? undefined,
   });
 
   return res;

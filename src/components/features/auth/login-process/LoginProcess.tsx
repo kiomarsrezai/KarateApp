@@ -6,9 +6,23 @@ import { OtpForm } from "./OtpForm";
 import { UserInfoForm } from "./UserInfoForm";
 
 type Step = 1 | 2 | 3;
-const LoginProcess = () => {
+
+type LoginProcessProps = {
+  onDone: () => void;
+};
+
+const LoginProcess = ({ onDone }: LoginProcessProps) => {
   const [step, setStep] = useState<Step>(1);
-  const onNext = () => setStep((prev) => (prev + 1) as Step);
+  const onNext = () =>
+    setStep((prev) => {
+      const newStep = prev + 1;
+
+      if (newStep === 4) {
+        onDone();
+      }
+
+      return newStep as Step;
+    });
   const onPrev = () => setStep((prev) => (prev - 1) as Step);
 
   const forms: Record<

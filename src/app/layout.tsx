@@ -5,6 +5,7 @@ import { Footer } from "~/components/seactions/layout/Footer";
 import { RtlProvider } from "./RtlProvider";
 import { shabnamFont } from "~/font/font";
 import { QueryProvider } from "./QueryProvider";
+import { Toaster } from "~/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "کاراته",
@@ -24,6 +25,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
                 <Footer />
               </div>
             </div>
+            <Toaster duration={2000} position="top-center" />
           </body>
         </html>
       </RtlProvider>

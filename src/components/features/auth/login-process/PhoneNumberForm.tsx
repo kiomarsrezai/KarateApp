@@ -76,7 +76,9 @@ export const PhoneNumberForm = ({ onNext }: PhoneNumberFormProps) => {
           )}
         />
 
-        <Button className="rounded-full">ارسال کد تایید</Button>
+        <Button loading={mutation.isPending} className="rounded-full">
+          ارسال کد تایید
+        </Button>
       </form>
     </Form>
   );

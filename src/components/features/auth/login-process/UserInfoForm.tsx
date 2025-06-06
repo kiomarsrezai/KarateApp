@@ -23,6 +23,11 @@ import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 import { UploadIcon } from "lucide-react";
 import { Checkbox } from "~/components/ui/checkbox";
+import { useMutation } from "@tanstack/react-query";
+import { completeProfileApi } from "../api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "./useAuthStore";
 
 const roles = [
   {
@@ -72,6 +77,8 @@ type PhoneNumberFormProps = {
 };
 
 export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
+  const authStore = useAuthStore();
+
   const form = useForm({
     resolver: valibotResolver(FormSchema),
     defaultValues: {
@@ -81,16 +88,28 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
       city: "",
       father: "",
       phoneNumber2: "",
-      phoneNumber: "",
+      phoneNumber: authStore.phoneNumber ?? "",
       identityCode: "",
       postalCode: "",
       roles: [],
+      files: "Test",
     },
   });
 
+  // mutation
+  const router = useRouter();
+  const mutation = useMutation({
+    mutationFn: completeProfileApi,
+    onSuccess() {
+      toast.success("به انجمن شیتوریو دو ایران خوش آمدید");
+      onNext();
+      router.push("/dashboard/player");
+    },
+  });
+
+  // submit
   const onSubmit = form.handleSubmit((values) => {
-    console.log(values);
-    onNext();
+    mutation.mutate(values);
   });
 
   return (
@@ -184,6 +203,7 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
                 <Input
                   placeholder="09 - - - - - - - - -"
                   dir="ltr"
+                  disabled
                   {...field}
                 />
               </FormControl>
