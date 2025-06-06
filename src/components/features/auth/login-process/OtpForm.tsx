@@ -14,12 +14,17 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "~/components/ui/input-otp";
+import { useMutation } from "@tanstack/react-query";
+import { verifyOtpApi } from "../api";
+import { useAuthStore } from "./useAuthStore";
+
+const CODE_LENGTH = 4;
 
 const FormSchema = object({
   code: pipe(
     string(),
     minLength(1, "لطفا کد تایید را وارد کنید"),
-    length(6, "لطفا کد تایید را وارد کنید"),
+    length(CODE_LENGTH, "لطفا کد تایید را وارد کنید"),
     check((value) => /^\d+$/.test(value), "فقط کاراکتر های عددی مجاز است")
   ),
 });
@@ -29,7 +34,8 @@ type PhoneNumberFormProps = {
   onPrev: () => void;
 };
 
-export const OtpForm = ({ onNext }: PhoneNumberFormProps) => {
+export const OtpForm = ({ onNext, onPrev }: PhoneNumberFormProps) => {
+  // form
   const form = useForm({
     resolver: valibotResolver(FormSchema),
     defaultValues: {
@@ -37,9 +43,27 @@ export const OtpForm = ({ onNext }: PhoneNumberFormProps) => {
     },
   });
 
+  // mutation
+  const authStore = useAuthStore();
+  const mutation = useMutation({
+    mutationFn: verifyOtpApi,
+    onSuccess(res) {
+      authStore.setToken(res.token);
+      onNext();
+    },
+  });
+
+  // submit
   const onSubmit = form.handleSubmit((values) => {
-    console.log(values);
-    onNext();
+    if (!authStore.phoneNumber) {
+      onPrev();
+      return;
+    }
+
+    mutation.mutate({
+      phoneNumber: authStore.phoneNumber,
+      code: values.code,
+    });
   });
 
   return (
@@ -50,12 +74,14 @@ export const OtpForm = ({ onNext }: PhoneNumberFormProps) => {
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-center">
-                <FormLabel className="font-normal">کد تایید 6 رقمی</FormLabel>
+                <FormLabel className="font-normal">
+                  کد تایید {CODE_LENGTH} رقمی
+                </FormLabel>
               </div>
               <div dir="ltr" className="flex justify-center mt-4">
-                <InputOTP maxLength={6} {...field}>
+                <InputOTP maxLength={CODE_LENGTH} {...field}>
                   <InputOTPGroup className="md:gap-x-6">
-                    {Array.from({ length: 6 })
+                    {Array.from({ length: CODE_LENGTH })
                       .fill(null)
                       .map((_, i) => (
                         <InputOTPSlot

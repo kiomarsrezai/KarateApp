@@ -11,6 +11,9 @@ import { string, object, pipe, minLength, check, length } from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { sendOtpApi } from "../api";
+import { useAuthStore } from "./useAuthStore";
 
 const FormSchema = object({
   phoneNumber: pipe(
@@ -30,6 +33,7 @@ type PhoneNumberFormProps = {
 };
 
 export const PhoneNumberForm = ({ onNext }: PhoneNumberFormProps) => {
+  // form
   const form = useForm({
     resolver: valibotResolver(FormSchema),
     defaultValues: {
@@ -37,9 +41,19 @@ export const PhoneNumberForm = ({ onNext }: PhoneNumberFormProps) => {
     },
   });
 
+  // mutation
+  const authStore = useAuthStore();
+  const mutation = useMutation({
+    mutationFn: sendOtpApi,
+    onSuccess(res, formValues) {
+      authStore.setPhoneNumber(formValues.phoneNumber);
+      onNext();
+    },
+  });
+
+  // submit
   const onSubmit = form.handleSubmit((values) => {
-    console.log(values);
-    onNext();
+    mutation.mutate(values);
   });
 
   return (

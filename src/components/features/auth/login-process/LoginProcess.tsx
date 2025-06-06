@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { PhoneNumberForm } from "./PhoneNumberForm";
 import { OtpForm } from "./OtpForm";

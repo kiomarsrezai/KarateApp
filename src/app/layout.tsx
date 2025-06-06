@@ -4,6 +4,7 @@ import { Header } from "~/components/seactions/layout/Header";
 import { Footer } from "~/components/seactions/layout/Footer";
 import { RtlProvider } from "./RtlProvider";
 import { shabnamFont } from "~/font/font";
+import { QueryProvider } from "./QueryProvider";
 
 export const metadata: Metadata = {
   title: "کاراته",
@@ -12,19 +13,21 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: React.PropsWithChildren) => {
   return (
-    <RtlProvider>
-      <html lang="fa" dir="rtl">
-        <body className={`${shabnamFont.className} antialiased`}>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <div className="relative z-50">
-              <Footer />
+    <QueryProvider>
+      <RtlProvider>
+        <html lang="fa" dir="rtl">
+          <body className={`${shabnamFont.className} antialiased`}>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <div className="relative z-50">
+                <Footer />
+              </div>
             </div>
-          </div>
-        </body>
-      </html>
-    </RtlProvider>
+          </body>
+        </html>
+      </RtlProvider>
+    </QueryProvider>
   );
 };
 
