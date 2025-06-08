@@ -110,9 +110,10 @@ const LocationInput = ({ onChange, value }: locationInputProps) => {
 type PhoneNumberFormProps = {
   onNext: () => void;
   onPrev: () => void;
+  onDone: () => void;
 };
 
-export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
+export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
   const authStore = useAuthStore();
 
   const form = useForm({
@@ -144,7 +145,7 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
     },
     onSuccess(data) {
       toast.success("به انجمن شیتوریو دو ایران خوش آمدید");
-      onNext();
+      onDone();
       const role = getRoleByValue(data.roles[0]);
       if (!role) return;
       router.push(role.path);

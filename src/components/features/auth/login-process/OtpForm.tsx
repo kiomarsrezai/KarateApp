@@ -28,6 +28,7 @@ import { useAuthStore } from "./useAuthStore";
 import { toast } from "sonner";
 import { getRoleByValue } from "../../user/utils";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const CODE_LENGTH = 4;
 
@@ -64,6 +65,9 @@ export const OtpForm = ({ onNext, onPrev, onDone }: PhoneNumberFormProps) => {
     ) => {
       const res = await verifyOtpApi(data);
       const user = await getUserByToken(res.token);
+      if (user.isMobileVerified) {
+        await signIn("credentials", { redirect: false, token: res.token });
+      }
       return { ...res, registered: user.isMobileVerified, roles: user.roles };
     },
     onSuccess(res) {

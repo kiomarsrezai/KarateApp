@@ -11,7 +11,9 @@ import {
   LucideIcon,
   UserRound,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { roles } from "~/components/features/user/config";
 import { Button } from "~/components/ui/button";
 import { Collapsible, CollapsibleTrigger } from "~/components/ui/collapsible";
 import {
@@ -115,6 +117,11 @@ const CoachSidebarTrigger = () => {
 
 const CoachSidebarHeader = () => {
   const { open } = useSidebar();
+  const { data: session } = useSession();
+  const user = session?.user;
+
+  const activeRoles = roles.filter((role) => user?.roles.includes(role.value));
+
   if (!open) return null;
 
   return (
@@ -126,15 +133,11 @@ const CoachSidebarHeader = () => {
           <ChevronDownIcon className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem asChild>
-            <Link href={"/dashboard/player"}>ورزشکار</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href={"/dashboard/referee"}>داور</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href={"/dashboard/coach"}>مربی</Link>
-          </DropdownMenuItem>
+          {activeRoles.map((role) => (
+            <DropdownMenuItem key={role.value} asChild>
+              <Link href={role.path}>{role.label}</Link>
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
     </SidebarHeader>
