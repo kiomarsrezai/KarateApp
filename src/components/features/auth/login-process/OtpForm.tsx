@@ -6,7 +6,15 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-import { string, object, pipe, minLength, check, length } from "valibot";
+import {
+  string,
+  object,
+  pipe,
+  minLength,
+  check,
+  length,
+  InferInput,
+} from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Button } from "~/components/ui/button";
 import {
@@ -15,8 +23,11 @@ import {
   InputOTPSlot,
 } from "~/components/ui/input-otp";
 import { useMutation } from "@tanstack/react-query";
-import { verifyOtpApi } from "../api";
+import { getUserByToken, verifyOtpApi } from "../api";
 import { useAuthStore } from "./useAuthStore";
+import { toast } from "sonner";
+import { getRoleByValue } from "../../user/utils";
+import { useRouter } from "next/navigation";
 
 const CODE_LENGTH = 4;
 
@@ -32,9 +43,10 @@ const FormSchema = object({
 type PhoneNumberFormProps = {
   onNext: () => void;
   onPrev: () => void;
+  onDone: () => void;
 };
 
-export const OtpForm = ({ onNext, onPrev }: PhoneNumberFormProps) => {
+export const OtpForm = ({ onNext, onPrev, onDone }: PhoneNumberFormProps) => {
   // form
   const form = useForm({
     resolver: valibotResolver(FormSchema),
@@ -45,11 +57,26 @@ export const OtpForm = ({ onNext, onPrev }: PhoneNumberFormProps) => {
 
   // mutation
   const authStore = useAuthStore();
+  const router = useRouter();
   const mutation = useMutation({
-    mutationFn: verifyOtpApi,
+    mutationFn: async (
+      data: InferInput<typeof FormSchema> & { phoneNumber: string }
+    ) => {
+      const res = await verifyOtpApi(data);
+      const user = await getUserByToken(res.token);
+      return { ...res, registered: user.isMobileVerified, roles: user.roles };
+    },
     onSuccess(res) {
-      authStore.setToken(res.token);
-      onNext();
+      if (res.registered) {
+        toast.success("به انجمن شیتوریو دو ایران خوش آمدید");
+        onDone();
+        const role = getRoleByValue(res?.roles?.[0]);
+        if (!role) return;
+        router.push(role.path);
+      } else {
+        authStore.setToken(res.token);
+        onNext();
+      }
     },
   });
 

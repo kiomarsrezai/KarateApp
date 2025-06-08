@@ -30,6 +30,7 @@ const LoginProcess = ({ onDone }: LoginProcessProps) => {
     React.FC<{
       onNext: () => void;
       onPrev: () => void;
+      onDone: () => void;
     }>
   > = {
     "1": PhoneNumberForm,
@@ -38,7 +39,7 @@ const LoginProcess = ({ onDone }: LoginProcessProps) => {
   };
 
   const ActiveForm = forms[step];
-  return <ActiveForm onNext={onNext} onPrev={onPrev} />;
+  return <ActiveForm onNext={onNext} onPrev={onPrev} onDone={onDone} />;
 };
 
 export default LoginProcess;
