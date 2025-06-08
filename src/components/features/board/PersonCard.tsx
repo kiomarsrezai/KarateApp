@@ -1,7 +1,12 @@
 import Image from "next/image";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
+import { BoardMember } from "./types";
 
-export const Person = () => {
+type PersonCardProps = {
+  person: BoardMember;
+};
+
+export const PersonCard = ({ person }: PersonCardProps) => {
   return (
     <div className="mb-10">
       <div className="rounded-xl overflow-hidden">
@@ -18,8 +23,8 @@ export const Person = () => {
         </AspectRatio>
       </div>
       <div className="mt-2">
-        <p className="text-foreground/70">مدیر عامل</p>
-        <p className="font-semibold">نام و نام خانوادگی</p>
+        <p className="text-foreground/70">{person.position}</p>
+        <p className="font-semibold">{person.fullName}</p>
       </div>
     </div>
   );
