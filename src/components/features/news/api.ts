@@ -5,3 +5,8 @@ export const getNewsApi = async () => {
   const res = await apiRequest<News[]>("/News", { method: "GET" });
   return res;
 };
+
+export const getSingleNewsApi = async (id: number) => {
+  const res = await apiRequest<News>(`/News/${id}`, { method: "GET" });
+  return res;
+};
