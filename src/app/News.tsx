@@ -1,39 +1,15 @@
-import Image from "next/image";
-import Link from "next/link";
-import { AspectRatio } from "~/components/ui/aspect-ratio";
-import { Card } from "~/components/ui/card";
+import { getNewsApi } from "~/components/features/news/api";
+import { NewsCard } from "~/components/features/news/NewsCard";
 
-const NewsItem = () => {
-  return (
-    <Link href={"/news/1"}>
-      <Card className="relative p-0 overflow-hidden shadow-none">
-        <AspectRatio ratio={16 / 9}>
-          <Image
-            src={
-              "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            }
-            alt="club"
-            width={200}
-            height={200}
-            className="w-full"
-          />
-        </AspectRatio>
-        <div className="flex absolute left-1/2 top-1/2 size-full -translate-1/2 bg-black/30 justify-center items-center text-white">
-          <strong className="md:text-lg">تیتر خبر</strong>
-        </div>
-      </Card>
-    </Link>
-  );
-};
-
-export const News = () => {
+export const News = async () => {
+  const newsItems = await getNewsApi();
   return (
     <section className="flex flex-col gap-y-8">
       <h3 className="text-center text-2xl font-bold">اخبار</h3>
       <div className="grid md:grid-cols-3 gap-10">
-        <NewsItem />
-        <NewsItem />
-        <NewsItem />
+        {newsItems.splice(0, 3).map((newsItem) => (
+          <NewsCard key={newsItem.newsId} newsItem={newsItem} />
+        ))}
       </div>
     </section>
   );
