@@ -38,15 +38,8 @@ import { useState } from "react";
 import { ProvinceInput } from "../../location/ProvinceInput";
 import { CityInput } from "../../location/CityInput";
 import { Label } from "~/components/ui/label";
-
-const roles = [
-  {
-    value: 2,
-    label: "ورزشکار",
-  },
-  { value: 3, label: "مربی" },
-  { value: 4, label: "داور" },
-] as const;
+import { roles } from "../../user/config";
+import { getRoleByValue } from "../../user/utils";
 
 const FormSchema = object({
   selectedRoles: pipe(
@@ -144,14 +137,17 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
   const router = useRouter();
   const mutation = useMutation({
     mutationFn: async (data: InferInput<typeof FormSchema>) => {
-      await completeProfileApi(data);
+      const res = await completeProfileApi(data);
       const token = useAuthStore.getState().token;
       await signIn("credentials", { redirect: false, token });
+      return res;
     },
-    onSuccess() {
+    onSuccess(data) {
       toast.success("به انجمن شیتوریو دو ایران خوش آمدید");
       onNext();
-      router.push("/dashboard/player");
+      const role = getRoleByValue(data.roles[0]);
+      if (!role) return;
+      router.push(role.path);
     },
   });
 

@@ -2,6 +2,7 @@ export type User = {
   id: number;
   creationDate: Date;
   emailVerfied: Date;
+  token: string;
   name: null | string;
   family: null | string;
   fatherName: null | string;

@@ -23,7 +23,8 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "~/components/ui/sheet";
-import { useUser } from "~/hooks/useUser";
+import { useSession } from "next-auth/react";
+import { getRoleByValue } from "~/components/features/user/utils";
 
 // menu components
 type MenuItemShape = {
@@ -92,12 +93,18 @@ const HeaderMenu = () => {
 // user components
 const User = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { status, data: session } = useSession();
   const router = useRouter();
-  const user = useUser();
+
+  const user = session?.user;
+  const isLoading = status === "loading";
+  const isLogin = status === "authenticated";
 
   const onClick = () => {
-    if (user) {
-      router.push("/dashboard/player");
+    if (isLogin) {
+      const role = getRoleByValue(user!.roles[0]);
+      if (!role) return;
+      router.push(role.path);
     } else {
       setDialogOpen(true);
     }
@@ -107,6 +114,7 @@ const User = () => {
       <Button
         className="max-md:size-8 bg-white md:bg-primary text-black md:text-primary-foreground md:!px-10 rounded-full"
         onClick={onClick}
+        disabled={isLoading}
       >
         <span className="hidden md:block">ورود به پنل کاربری</span>
         <UserIcon className="size-4 md:hidden" />

@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import { auth } from "./lib/auth";
+import { getRoleByStartPath } from "./components/features/user/utils";
 
 export const middleware = auth((req) => {
   const pathname = req.nextUrl.pathname;
   const user = req.auth?.user;
 
-  console.log({ user });
-
-  const isDashboard = pathname.startsWith("/dashboard");
+  const panel = getRoleByStartPath(pathname);
+  const hasAccess = user?.roles.includes(panel?.value ?? 99);
 
   // Redirect to login if not logged in
-  if (!user && isDashboard) {
+  if (panel && !hasAccess) {
     const loginUrl = new URL(`/`, req.url);
     return NextResponse.redirect(loginUrl);
   }

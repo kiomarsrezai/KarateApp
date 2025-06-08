@@ -39,7 +39,6 @@ export const apiRequest = async <T>(
   const token = options.forceToken ?? (await getToken());
   const formatedUrl = env.NEXT_PUBLIC_API_URL + url;
 
-  console.log({ formatedUrl });
   const response = await fetch(formatedUrl, {
     method,
     body: body ? JSON.stringify(body) : undefined,
