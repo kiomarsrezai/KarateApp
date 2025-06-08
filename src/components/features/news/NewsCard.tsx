@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { Card } from "~/components/ui/card";
 import { News } from "./types";
+import { getFilePathWithDefault } from "~/lib/utils";
 
 type NewsCardProps = {
   newsItem: News;
@@ -14,9 +15,7 @@ export const NewsCard = ({ newsItem }: NewsCardProps) => {
       <Card className="relative p-0 overflow-hidden shadow-none">
         <AspectRatio ratio={16 / 9}>
           <Image
-            src={
-              "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            }
+            src={getFilePathWithDefault(newsItem.imageName)}
             alt="club"
             width={200}
             height={200}

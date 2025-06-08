@@ -5,6 +5,7 @@ import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent } from "~/components/ui/card";
 import { Club } from "./types";
+import { getFilePathWithDefault } from "~/lib/utils";
 
 type ClubCardProps = {
   club: Club;
@@ -18,9 +19,7 @@ export const ClubCard = ({ club }: ClubCardProps) => {
           <div className="rounded-lg overflow-hidden">
             <AspectRatio ratio={16 / 9}>
               <Image
-                src={
-                  "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                }
+                src={getFilePathWithDefault(club.imageFile)}
                 alt="club"
                 width={200}
                 height={200}
@@ -37,7 +36,7 @@ export const ClubCard = ({ club }: ClubCardProps) => {
           <div className="flex justify-center mt-10 mb-1">
             <Button asChild variant={"ghost"}>
               <Link
-                href={`/clubs/${club.name}`}
+                href={`/clubs/${club.id}`}
                 className="!text-primary text-sm"
               >
                 اطلاعات بیشتر
@@ -49,7 +48,7 @@ export const ClubCard = ({ club }: ClubCardProps) => {
       </Card>
 
       {/* mobile version */}
-      <Link href={"/clubs/1"} className="md:hidden">
+      <Link href={`/clubs/${club.id}`} className="md:hidden">
         <Card className="relative p-0 overflow-hidden shadow-none">
           <AspectRatio ratio={16 / 9}>
             <Image
