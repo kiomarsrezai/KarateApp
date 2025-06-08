@@ -1,5 +1,6 @@
 import { apiRequest } from "~/lib/api-request";
 import { useAuthStore } from "./login-process/useAuthStore";
+import { User } from "../user/types";
 
 // send otp
 type SendOtpBody = {
@@ -12,7 +13,7 @@ type SendOtpResult = {
 };
 
 export const sendOtpApi = async (data: SendOtpBody) => {
-  const res = await apiRequest<SendOtpResult>("/User/sendotp", {
+  const res = await apiRequest<SendOtpResult>("/User/SendOtp", {
     method: "POST",
     body: data,
   });
@@ -46,30 +47,40 @@ type CompleteProfileBody = {
   name: string;
   family: string;
   fatherName: string;
-  isMobileVerified: boolean;
   nationalCode: string;
   address: string;
   pOstalCode: string;
   phoneNumberFamily: string;
-  birthDay: string;
   birthDate: Date;
   cityId: number;
-  userType: number;
-  email: string;
-  password: string;
-  avatar: string;
-  rezumeFile: string;
+  rezumeFile: string | null;
   selectedRoles: number[];
 };
 
-type CompleteProfileResult = {};
-
 export const completeProfileApi = async (data: CompleteProfileBody) => {
   const authStore = useAuthStore.getState();
-  const res = apiRequest<CompleteProfileResult>("/User/completeprofile", {
+  const res = apiRequest<User>("/User/CompleteProfile", {
     method: "POST",
-    body: data,
+    body: {
+      ...data,
+      isMobileVerified: true,
+      birthDay: "Test",
+      userType: 1,
+      email: "",
+      password: "",
+      avatar: "",
+    },
     forceToken: authStore.token ?? undefined,
+  });
+
+  return res;
+};
+
+// get user by token
+export const getUserByToken = async (token: string) => {
+  const res = apiRequest<User>("/User/GetUserInfoByToken", {
+    method: "GET",
+    forceToken: token,
   });
 
   return res;

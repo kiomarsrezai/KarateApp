@@ -1,1 +1,25 @@
-export type User = {};
+export type User = {
+  id: number;
+  creationDate: Date;
+  emailVerfied: Date;
+  name: null | string;
+  family: null | string;
+  fatherName: null | string;
+  phoneNumber: string;
+  isMobileVerified: boolean;
+  isProfileCompleted: boolean;
+  isMembershipPaid: boolean;
+  membershipPaidDate: null | Date;
+  nationalCode: null | string;
+  address: null | string;
+  pOstalCode: null | string;
+  phoneNumberFamily: null | string;
+  birthDay: null | Date;
+  cityId: null | number;
+  email: null | string;
+  password: null | string;
+  avatar: null | string;
+  rezumeFile: null | string;
+  birthDate: Date;
+  roles: number[];
+};

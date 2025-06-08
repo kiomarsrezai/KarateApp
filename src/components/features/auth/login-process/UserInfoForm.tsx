@@ -16,7 +16,12 @@ import {
   length,
   picklist,
   array,
+  date,
+  number,
+  nullable,
+  InferInput,
 } from "valibot";
+import { signIn } from "next-auth/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
@@ -28,23 +33,29 @@ import { completeProfileApi } from "../api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "./useAuthStore";
+import { DatePicker } from "~/components/common/input/DatePicker";
+import { useState } from "react";
+import { ProvinceInput } from "../../location/ProvinceInput";
+import { CityInput } from "../../location/CityInput";
+import { Label } from "~/components/ui/label";
 
 const roles = [
   {
-    value: "Player",
+    value: 2,
     label: "ورزشکار",
   },
-  { value: "Coach", label: "مربی" },
-  { value: "Referee", label: "داور" },
+  { value: 3, label: "مربی" },
+  { value: 4, label: "داور" },
 ] as const;
 
 const FormSchema = object({
-  roles: pipe(
+  selectedRoles: pipe(
     array(picklist(roles.map((role) => role.value))),
     minLength(1, "حداقل یه مورد را انتخاب کنید")
   ),
-  name: pipe(string(), minLength(1, "نام و نام خانوادگی ضروری است")),
-  father: pipe(string(), minLength(1, "نام پدر ضروری است")),
+  name: pipe(string(), minLength(1, "نام ضروری است")),
+  family: pipe(string(), minLength(1, "نام خانوادگی ضروری است")),
+  fatherName: pipe(string(), minLength(1, "نام پدر ضروری است")),
   phoneNumber: pipe(
     string(),
     minLength(1, "شماره موبایل ضروری است"),
@@ -54,12 +65,12 @@ const FormSchema = object({
     ),
     length(11, "شماره موبایل باید 11 رقمی باشد")
   ),
-  city: pipe(string(), minLength(1, "شهر ضروری است")),
-  age: pipe(string(), minLength(1, "سن ضروری است")),
+  cityId: number("شهر ضروری است"),
   address: pipe(string(), minLength(1, "آدرس ضروری است")),
-  postalCode: pipe(string(), minLength(1, "کد پستی ضروری است")),
-  identityCode: pipe(string(), minLength(1, "کد ملی ضروری است")),
-  phoneNumber2: pipe(
+  pOstalCode: pipe(string(), minLength(1, "کد پستی ضروری است")),
+  nationalCode: pipe(string(), minLength(1, "کد ملی ضروری است")),
+  birthDate: date(),
+  phoneNumberFamily: pipe(
     string(),
     minLength(1, "شماره موبایل ضروری است"),
     check(
@@ -68,9 +79,41 @@ const FormSchema = object({
     ),
     length(11, "شماره موبایل باید 11 رقمی باشد")
   ),
-  files: pipe(string(), minLength(1, "مدرک ضروری است")),
+  rezumeFile: nullable(pipe(string(), minLength(1, "مدرک ضروری است"))),
 });
 
+// locations
+type locationInputProps = {
+  value: number | null;
+  onChange: (newValue: number | null) => void;
+};
+const LocationInput = ({ onChange, value }: locationInputProps) => {
+  const [provinceId, setProvinceId] = useState<null | number>(null);
+
+  return (
+    <>
+      <div className="flex flex-col gap-2">
+        <Label>استان</Label>
+        <ProvinceInput value={provinceId} onChange={setProvinceId} />
+        <FormMessage />
+      </div>
+
+      <FormItem>
+        <FormLabel>شهر</FormLabel>
+        <FormControl>
+          <CityInput
+            value={value}
+            onChange={onChange}
+            provinceId={provinceId}
+          />
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    </>
+  );
+};
+
+// form
 type PhoneNumberFormProps = {
   onNext: () => void;
   onPrev: () => void;
@@ -83,23 +126,28 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
     resolver: valibotResolver(FormSchema),
     defaultValues: {
       name: "",
+      family: "",
       address: "",
-      age: "",
-      city: "",
-      father: "",
-      phoneNumber2: "",
+      birthDate: undefined,
+      cityId: undefined,
+      fatherName: "",
+      phoneNumberFamily: "",
       phoneNumber: authStore.phoneNumber ?? "",
-      identityCode: "",
-      postalCode: "",
-      roles: [],
-      files: "Test",
+      nationalCode: "",
+      pOstalCode: "",
+      selectedRoles: [],
+      rezumeFile: null,
     },
   });
 
   // mutation
   const router = useRouter();
   const mutation = useMutation({
-    mutationFn: completeProfileApi,
+    mutationFn: async (data: InferInput<typeof FormSchema>) => {
+      await completeProfileApi(data);
+      const token = useAuthStore.getState().token;
+      await signIn("credentials", { redirect: false, token });
+    },
     onSuccess() {
       toast.success("به انجمن شیتوریو دو ایران خوش آمدید");
       onNext();
@@ -116,7 +164,7 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
     <Form {...form}>
       <form onSubmit={onSubmit} className="flex flex-col gap-y-6">
         <FormField
-          name="roles"
+          name="selectedRoles"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -152,7 +200,7 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>نام و نام خانوادگی</FormLabel>
+              <FormLabel>نام</FormLabel>
               <FormControl>
                 <Input
                   dir="ltr"
@@ -166,7 +214,25 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
         />
 
         <FormField
-          name="father"
+          name="family"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>نام خانوادگی</FormLabel>
+              <FormControl>
+                <Input
+                  dir="ltr"
+                  placeholder="09 - - - - - - - - -"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          name="fatherName"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -180,7 +246,7 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
         />
 
         <FormField
-          name="identityCode"
+          name="nationalCode"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -213,27 +279,19 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
         />
 
         <FormField
-          name="city"
+          name="cityId"
           control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>شهر / استان</FormLabel>
-              <FormControl>
-                <Input placeholder="انتخاب کنید" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => <LocationInput {...field} />}
         />
 
         <FormField
-          name="age"
+          name="birthDate"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>سن</FormLabel>
+              <FormLabel>تاریخ تولد</FormLabel>
               <FormControl>
-                <Input placeholder="تایپ کنید" {...field} />
+                <DatePicker {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -259,7 +317,7 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
         />
 
         <FormField
-          name="postalCode"
+          name="pOstalCode"
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -273,11 +331,11 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
         />
 
         <FormField
-          name="phoneNumber2"
+          name="phoneNumberFamily"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>شماره تلفن موبایل</FormLabel>
+              <FormLabel>شماره تلفن والدین</FormLabel>
               <FormControl>
                 <Input placeholder="تایپ کنید" {...field} />
               </FormControl>
@@ -287,7 +345,7 @@ export const UserInfoForm = ({ onNext }: PhoneNumberFormProps) => {
         />
 
         <FormField
-          name="files"
+          name="rezumeFile"
           control={form.control}
           render={({ field }) => (
             <FormItem>

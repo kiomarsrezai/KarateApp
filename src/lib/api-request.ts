@@ -1,6 +1,7 @@
 import { getSession } from "next-auth/react";
 import { toast } from "sonner";
 import { auth } from "./auth";
+import { env } from "~/env";
 
 const getToken = async () => {
   let user = null;
@@ -36,7 +37,7 @@ export const apiRequest = async <T>(
   const method = options.method ?? "GET";
   const body = options.body ?? null;
   const token = options.forceToken ?? (await getToken());
-  const formatedUrl = "/api/proxy" + url;
+  const formatedUrl = env.NEXT_PUBLIC_API_URL + url;
 
   console.log({ formatedUrl });
   const response = await fetch(formatedUrl, {

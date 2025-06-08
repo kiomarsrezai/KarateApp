@@ -6,6 +6,7 @@ import { RtlProvider } from "./RtlProvider";
 import { shabnamFont } from "~/font/font";
 import { QueryProvider } from "./QueryProvider";
 import { Toaster } from "~/components/ui/sonner";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "کاراته",
@@ -14,22 +15,24 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: React.PropsWithChildren) => {
   return (
-    <QueryProvider>
-      <RtlProvider>
-        <html lang="fa" dir="rtl">
-          <body className={`${shabnamFont.className} antialiased`}>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <div className="relative z-50">
-                <Footer />
+    <SessionProvider>
+      <QueryProvider>
+        <RtlProvider>
+          <html lang="fa" dir="rtl">
+            <body className={`${shabnamFont.className} antialiased`}>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <div className="relative z-50">
+                  <Footer />
+                </div>
               </div>
-            </div>
-            <Toaster duration={2000} position="top-center" />
-          </body>
-        </html>
-      </RtlProvider>
-    </QueryProvider>
+              <Toaster duration={2000} position="top-center" />
+            </body>
+          </html>
+        </RtlProvider>
+      </QueryProvider>
+    </SessionProvider>
   );
 };
 

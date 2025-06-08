@@ -2,7 +2,7 @@
 
 import { InstagramIcon, LucideIcon, MenuIcon, UserIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "~/lib/utils";
 import Link from "next/link";
 import { Logo } from "~/components/common/Logo";
@@ -23,6 +23,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "~/components/ui/sheet";
+import { useUser } from "~/hooks/useUser";
 
 // menu components
 type MenuItemShape = {
@@ -90,12 +91,13 @@ const HeaderMenu = () => {
 
 // user components
 const User = () => {
-  const isLogin = false;
   const [dialogOpen, setDialogOpen] = useState(false);
+  const router = useRouter();
+  const user = useUser();
 
   const onClick = () => {
-    if (isLogin) {
-      // navigate
+    if (user) {
+      router.push("/dashboard/player");
     } else {
       setDialogOpen(true);
     }

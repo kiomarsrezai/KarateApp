@@ -1,6 +1,7 @@
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 
 import Credentials from "next-auth/providers/credentials";
+import { getUserByToken } from "~/components/features/auth/api";
 import { User } from "~/components/features/user/types";
 
 /**
@@ -11,10 +12,7 @@ import { User } from "~/components/features/user/types";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    user: {
-      id: string;
-      token: string;
-    } & DefaultSession["user"];
+    user: User;
   }
 
   // interface User {
@@ -36,15 +34,10 @@ export const authConfig = {
   providers: [
     Credentials({
       credentials: {
-        email: { label: "Email" },
-        password: { label: "Password", type: "password" },
+        token: { label: "Token" },
       },
-      async authorize({ email, password }): Promise<{ id: string } | null> {
-        // const user = await login({
-        //   email: email as string,
-        //   password: password as string,
-        // });
-        // return { id: user.token };
+      async authorize({ token }): Promise<{ id: string }> {
+        return { id: token as string };
       },
     }),
     /**
@@ -65,7 +58,7 @@ export const authConfig = {
 
       const jwt = token.sub;
 
-      const findedUser = {}; // await findMe({ forceToken: jwt });
+      const findedUser = await getUserByToken(jwt);
 
       return {
         ...token,
@@ -77,8 +70,9 @@ export const authConfig = {
       if (token) {
         session.user = {
           ...session.user,
-          ...(token as User),
-        };
+          ...token,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any;
       }
       return session;
     },
