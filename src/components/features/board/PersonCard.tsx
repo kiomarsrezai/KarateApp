@@ -43,7 +43,6 @@ export const PersonCard = ({ person }: PersonCardProps) => {
 
       <DialogContent
         showCloseButton={false}
-        closeWithClickOutside
         className="!max-w-4xl !rounded-[24px]"
       >
         <DialogMainSection className="p-8">

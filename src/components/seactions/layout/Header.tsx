@@ -77,7 +77,7 @@ const HeaderMenu = () => {
       text: "هیئت رئیسه",
     },
     {
-      link: "/6",
+      link: "/connect-us",
       text: "تماس با ما",
     },
   ];

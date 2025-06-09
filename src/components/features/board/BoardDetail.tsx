@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { BoardMember } from "./types";
 import { getFilePathWithDefault } from "~/lib/utils";
+import { Button } from "~/components/ui/button";
+import { DialogClose } from "~/components/ui/dialog";
 
 type BoardDetailProps = {
   board: BoardMember;
@@ -29,6 +31,17 @@ export const BoardDetail = ({ board }: BoardDetailProps) => {
       <div className="mt-4">
         <p className="font-medium mb-1">رزومه و توضیحات</p>
         <div dangerouslySetInnerHTML={{ __html: board.resumeHtml }}></div>
+      </div>
+
+      <div className="mt-10 flex justify-center">
+        <DialogClose asChild>
+          <Button
+            className="w-2/3 rounded-full border-black"
+            variant={"outline"}
+          >
+            بازگشت
+          </Button>
+        </DialogClose>
       </div>
     </div>
   );
