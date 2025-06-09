@@ -141,6 +141,6 @@
   }
 
   .container {
-    @apply px-10;
+    @apply px-10 mx-auto;
   }
 }

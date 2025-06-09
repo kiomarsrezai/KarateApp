@@ -33,7 +33,7 @@ const LoginProcess = ({ onDone }: LoginProcessProps) => {
       onDone: () => void;
     }>
   > = {
-    "1": PhoneNumberForm,
+    "1": UserInfoForm,
     "2": OtpForm,
     "3": UserInfoForm,
   };

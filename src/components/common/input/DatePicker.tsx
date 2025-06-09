@@ -4,27 +4,25 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
-import { formatDate } from "date-fns";
-import { Calendar } from "~/components/ui/calendar";
+import { formatDate } from "date-fns-jalali";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { type DayPickerBase } from "react-day-picker";
+import { PersianCalendar } from "~/components/ui/persian-calendar";
 
 type DatePickerProps = {
   value: Date | undefined;
   onChange: (newValue: Date | undefined) => void;
-  disabledDate?: DayPickerBase["disabled"];
 };
 
-export function DatePicker({ onChange, value, disabledDate }: DatePickerProps) {
+export function DatePicker({ onChange, value }: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
           className={cn(
-            "w-full justify-start text-left font-normal",
-            !value && "text-muted-foreground",
+            "w-full justify-start text-left font-normal !bg-transparent rounded-full !text-white",
+            !value && "text-muted-foreground"
           )}
         >
           <CalendarIcon />
@@ -32,12 +30,11 @@ export function DatePicker({ onChange, value, disabledDate }: DatePickerProps) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar
+        <PersianCalendar
           mode="single"
           selected={value}
           onSelect={onChange}
           initialFocus
-          disabled={disabledDate}
         />
       </PopoverContent>
     </Popover>

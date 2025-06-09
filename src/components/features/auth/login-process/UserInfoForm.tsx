@@ -199,11 +199,7 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
             <FormItem>
               <FormLabel>نام</FormLabel>
               <FormControl>
-                <Input
-                  dir="ltr"
-                  placeholder="09 - - - - - - - - -"
-                  {...field}
-                />
+                <Input placeholder="تایپ کنید" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -217,11 +213,7 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
             <FormItem>
               <FormLabel>نام خانوادگی</FormLabel>
               <FormControl>
-                <Input
-                  dir="ltr"
-                  placeholder="09 - - - - - - - - -"
-                  {...field}
-                />
+                <Input placeholder="تایپ کنید" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -235,7 +227,7 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
             <FormItem>
               <FormLabel>نام پدر</FormLabel>
               <FormControl>
-                <Input placeholder="انتخاب کنید" {...field} />
+                <Input placeholder="تایپ کنید" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -267,6 +259,7 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
                   placeholder="09 - - - - - - - - -"
                   dir="ltr"
                   disabled
+                  className="!opacity-100"
                   {...field}
                 />
               </FormControl>
