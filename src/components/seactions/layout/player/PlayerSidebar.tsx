@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { roles } from "~/components/features/user/config";
 import { Button } from "~/components/ui/button";
 import { Collapsible, CollapsibleTrigger } from "~/components/ui/collapsible";
@@ -33,6 +34,7 @@ import {
   SidebarMenuButton,
   useSidebar,
 } from "~/components/ui/sidebar";
+import { cn } from "~/lib/utils";
 
 type MenuItemShape = {
   text: string;
@@ -41,12 +43,19 @@ type MenuItemShape = {
 };
 
 const PlayerSidebarMenuItem = ({ icon: Icon, path, text }: MenuItemShape) => {
+  const pathname = usePathname();
+  const isActive = path === pathname;
   return (
     <Collapsible asChild defaultOpen={false} className="group/collapsible">
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton tooltip={text} asChild>
-            <Link href={path}>
+            <Link
+              href={path}
+              className={cn("!bg-transparent !text-white", {
+                "!bg-black/10": isActive,
+              })}
+            >
               <Icon className="size-4" />
               <span>{text}</span>
             </Link>
@@ -61,27 +70,27 @@ const PlayerSidebarMenu = () => {
   const items: MenuItemShape[] = [
     {
       text: "داشبورد",
-      path: "/",
+      path: "/dashboard/player",
       icon: HomeIcon,
     },
     {
       text: "اطلاعات شخصی",
-      path: "/",
+      path: "/dashboard/player/me",
       icon: UserRound,
     },
     {
       text: "رویدادها",
-      path: "/",
+      path: "/dashboard/player/events",
       icon: CalendarIcon,
     },
     {
       text: "آموزش",
-      path: "/",
+      path: "/dashboard/player/educations",
       icon: BookMinusIcon,
     },
     {
       text: "خدمات",
-      path: "/",
+      path: "/dashboard/player/services",
       icon: BedIcon,
     },
   ];

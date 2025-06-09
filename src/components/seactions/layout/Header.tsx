@@ -119,8 +119,8 @@ const User = () => {
         <span className="hidden md:block">ورود به پنل کاربری</span>
         <UserIcon className="size-4 md:hidden" />
       </Button>
-      <DialogContent className="!max-w-[calc(100vw-100px)] !h-[calc(100vh-100px)] bg-layer text-layer-foreground border-border/30">
-        <div className="absolute left-10 bottom-10 opacity-30">
+      <DialogContent className="!max-w-6xl py-10 bg-layer text-layer-foreground border-border/30">
+        <div className="absolute left-10 bottom-10 opacity-30 max-md:hidden">
           <ArtDesign side="Left" />
         </div>
         <div className="absolute right-10 top-10 opacity-30">

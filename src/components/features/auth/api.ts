@@ -69,6 +69,7 @@ export const completeProfileApi = async (data: CompleteProfileBody) => {
       email: "",
       password: "",
       avatar: "",
+      CreationDate: new Date(),
     },
     forceToken: authStore.token ?? undefined,
   });

@@ -129,7 +129,7 @@ const RefereeSidebarHeader = () => {
       <p className="text-xs">{'"نام کاربری"'}</p>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="bg-black/20 text-xs flex items-center gap-x-1 px-1">
-          <span>مربی</span>
+          <span>داور</span>
           <ChevronDownIcon className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
