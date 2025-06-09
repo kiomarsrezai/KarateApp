@@ -64,12 +64,12 @@ export const completeProfileApi = async (data: CompleteProfileBody) => {
     body: {
       ...data,
       isMobileVerified: true,
+      isProfileCompleted: true,
       birthDay: "Test",
       userType: 1,
       email: "",
       password: "",
       avatar: "",
-      CreationDate: new Date(),
     },
     forceToken: authStore.token ?? undefined,
   });

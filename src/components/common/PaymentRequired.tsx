@@ -4,8 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 import { payPlanApi } from "../features/payment/api";
+import { Card } from "../ui/card";
+import { useState } from "react";
+import { cn } from "~/lib/utils";
 
 export const PaymentRequired = () => {
+  const [mode, setMode] = useState(1);
   const { data } = useSession();
   const user = data?.user;
   const mutation = useMutation({
@@ -25,11 +29,29 @@ export const PaymentRequired = () => {
   };
   return (
     <div className="flex flex-col gap-y-3">
-      <p className="text-center font-bold md:text-xl">
-        جهت استفاده از خدمات سایت و پنل کاربری لطفا ابتدا مبلغ ورودی را
-        بپردازید.
-      </p>
-      <div className="flex justify-center">
+      <Card
+        className="p-6 flex flex-row items-center gap-x-4 shadow-none"
+        onClick={() => setMode(1)}
+      >
+        <div
+          className={cn("size-6 rounded-full border", {
+            "bg-primary": mode === 1,
+          })}
+        ></div>
+        <p>نحوه پرداخت را انتخاب کنید</p>
+      </Card>
+      <Card
+        className="p-6 flex flex-row items-center gap-x-4 shadow-none"
+        onClick={() => setMode(2)}
+      >
+        <div
+          className={cn("size-6 rounded-full border", {
+            "bg-primary": mode === 2,
+          })}
+        ></div>
+        <p>نحوه پرداخت را انتخاب کنید</p>
+      </Card>
+      <div className="flex justify-center mt-6">
         <Button
           className="w-full md:w-[400px] !rounded-full"
           onClick={onPay}

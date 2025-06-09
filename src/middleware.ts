@@ -11,10 +11,10 @@ export const middleware = auth((req) => {
   const hasAccess = user?.roles.includes(panel?.value ?? 99);
 
   // Redirect to login if not logged in
-  // if (panel && !hasAccess) {
-  //   const loginUrl = new URL(`/`, req.url);
-  //   return NextResponse.redirect(loginUrl);
-  // }
+  if (panel && !hasAccess) {
+    const loginUrl = new URL(`/`, req.url);
+    return NextResponse.redirect(loginUrl);
+  }
 });
 
 export const config = {

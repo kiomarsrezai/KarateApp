@@ -72,8 +72,6 @@ export const authConfig = {
           ...session.user,
           ...token,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          roles: [2, 3, 4],
-          isMobileVerified: true,
         } as any;
       }
       return session;

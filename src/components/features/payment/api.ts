@@ -15,7 +15,7 @@ type Result = {
 };
 
 export const payPlanApi = async (body: Body) => {
-  const res = await apiRequest<Result>("/Payment/ProcessPayment", {
+  const res = await apiRequest<Result>("/Payment/RequestPayment", {
     body,
     method: "POST",
   });

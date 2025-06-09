@@ -65,10 +65,10 @@ export const OtpForm = ({ onNext, onPrev, onDone }: PhoneNumberFormProps) => {
     ) => {
       const res = await verifyOtpApi(data);
       const user = await getUserByToken(res.token);
-      if (user.isMobileVerified) {
+      if (user.isProfileCompleted) {
         await signIn("credentials", { redirect: false, token: res.token });
       }
-      return { ...res, registered: user.isMobileVerified, roles: user.roles };
+      return { ...res, registered: user.isProfileCompleted, roles: user.roles };
     },
     onSuccess(res) {
       if (res.registered) {
