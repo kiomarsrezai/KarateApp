@@ -62,9 +62,8 @@ export const authConfig = {
 
       return {
         ...token,
+        ...findedUser,
         token: jwt,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ...(findedUser as any),
       };
     },
     session: async ({ session, token }) => {
@@ -73,6 +72,7 @@ export const authConfig = {
           ...session.user,
           ...token,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          roles: [2, 3, 4],
         } as any;
       }
       return session;

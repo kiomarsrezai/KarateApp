@@ -1,11 +1,11 @@
 import { PageContent } from "./PageContent";
 
-const RefereeHomePage = () => {
+const PaymentResultPage = () => {
   return (
-    <div className="p-6 md:p-30">
+    <div>
       <PageContent />
     </div>
   );
 };
 
-export default RefereeHomePage;
+export default PaymentResultPage;

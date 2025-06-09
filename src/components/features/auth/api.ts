@@ -83,5 +83,5 @@ export const getUserByToken = async (token: string) => {
     forceToken: token,
   });
 
-  return { ...res, roles: [2, 3], isMobileVerified: true };
+  return res;
 };

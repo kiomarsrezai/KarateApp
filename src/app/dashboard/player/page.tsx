@@ -1,9 +1,9 @@
-import { PaymentRequired } from "~/components/common/PaymentRequired";
+import { PageContent } from "./PageContent";
 
 const PlayerHomePage = () => {
   return (
     <div className="p-6 md:p-30">
-      <PaymentRequired />
+      <PageContent />
     </div>
   );
 };
