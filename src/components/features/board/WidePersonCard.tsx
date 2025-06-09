@@ -11,18 +11,18 @@ import {
 } from "~/components/ui/dialog";
 import { BoardDetail } from "./BoardDetail";
 
-type PersonCardProps = {
+type WidePersonCardProps = {
   person: BoardMember;
 };
 
-export const PersonCard = ({ person }: PersonCardProps) => {
+export const WidePersonCard = ({ person }: WidePersonCardProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Card className="py-0">
-          <CardContent className="p-3">
-            <div className="rounded-xl overflow-hidden">
-              <AspectRatio ratio={1 / 1}>
+          <CardContent className="p-3 flex flex-row gap-x-10 py-0 px-0">
+            <div className="rounded-xl overflow-hidden w-1/2">
+              <AspectRatio ratio={16 / 9}>
                 <Image
                   src={getFilePathWithDefault(person.imagePath)}
                   alt="person"

@@ -68,10 +68,12 @@ const DialogCloseIcon = ({
 function DialogContent({
   className,
   children,
-  showCloseButton,
+  showCloseButton = true,
+  closeWithClickOutside = false,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean;
+  closeWithClickOutside?: boolean;
 }) {
   return (
     <DialogPortal data-slot="dialog-portal">
@@ -83,12 +85,12 @@ function DialogContent({
           className
         )}
         onInteractOutside={(e) => {
-          e.preventDefault();
+          if (!closeWithClickOutside) e.preventDefault();
         }}
         {...props}
       >
         {children}
-        {!showCloseButton && <DialogCloseIcon />}
+        {showCloseButton && <DialogCloseIcon />}
       </DialogPrimitive.Content>
     </DialogPortal>
   );
