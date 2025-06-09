@@ -69,7 +69,7 @@ const HeaderMenu = () => {
       text: "لیست باشگاه ها",
     },
     {
-      link: "/5",
+      link: "/about-us",
       text: "درباره ما",
     },
     {
