@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { env } from "~/env";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,5 +10,5 @@ export const getFilePathWithDefault = (
   defaultImage?: string
 ) => {
   if (!filename) return defaultImage || "/img/default.jpg";
-  return `${env.NEXT_PUBLIC_FILE_URL}${filename}`;
+  return `${process.env.NEXT_PUBLIC_FILE_URL}${filename}`;
 };
