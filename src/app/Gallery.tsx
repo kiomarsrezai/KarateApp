@@ -14,8 +14,12 @@ import {
 import { cn } from "~/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
+import { GallerySlide } from "~/components/features/gallery/types";
 
-export const Gallery = () => {
+type GalleryProps = {
+  slides: GallerySlide[];
+};
+export const Gallery = ({ slides }: GalleryProps) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const count = 5;
@@ -38,13 +42,11 @@ export const Gallery = () => {
       setApi={setApi}
     >
       <CarouselContent>
-        {Array.from({ length: count }).map((_, index) => (
-          <CarouselItem key={index}>
+        {slides.map((slide) => (
+          <CarouselItem key={slide.id}>
             <Card className="h-[600px] max-h-screen p-0 relative border-none">
               <Image
-                src={
-                  "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                }
+                src={slide.url}
                 alt="gallery"
                 width={800}
                 height={800}
