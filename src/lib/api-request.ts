@@ -26,6 +26,7 @@ type ErrorShape = {
 type Options = {
   method?: "GET" | "POST" | "PUT" | "DELETE";
   body?: object;
+  formData?: FormData;
   forceToken?: string;
 };
 
@@ -35,28 +36,65 @@ export const apiRequest = async <T>(
 ): Promise<T> => {
   const method = options.method ?? "GET";
   const body = options.body ?? null;
+  const formData = options.formData ?? null;
   const token = options.forceToken ?? (await getToken());
-  const formatedUrl = process.env.NEXT_PUBLIC_API_URL + url;
+  const formattedUrl = process.env.NEXT_PUBLIC_API_URL + url;
 
-  const response = await fetch(formatedUrl, {
+  const headers: HeadersInit = {
+    Authorization: token ? `Bearer ${token}` : "",
+  };
+
+  // Only set Content-Type if not using FormData
+  if (!formData) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  const response = await fetch(formattedUrl, {
     method,
-    body: body ? JSON.stringify(body) : undefined,
-    headers: {
-      Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": "application/json",
-    },
+    body: formData || (body ? JSON.stringify(body) : undefined),
+    headers,
   });
 
   if (!response.ok) {
-    const error: ErrorShape = await response.json();
-    const errorMsg = Array.isArray(error.message)
-      ? error.message[0]
-      : error.message;
+    let errorMsg = "Unexpected error";
+    try {
+      const contentType = response.headers.get("Content-Type") ?? "";
+      if (contentType.includes("application/json")) {
+        const error: ErrorShape = await response.json();
+        errorMsg = Array.isArray(error.message)
+          ? error.message[0]
+          : error.message;
+      } else {
+        const text = await response.text();
+        console.warn("Non-JSON error response:", text);
+        errorMsg = `Unexpected response: ${response.status}`;
+      }
+    } catch {
+      errorMsg = response.statusText;
+    }
+
     toast.error(errorMsg);
     throw new Error(errorMsg);
   }
 
-  const data: T = await response.json();
+  // Handle 204 No Content
+  if (response.status === 204) {
+    return null as T;
+  }
 
-  return data;
+  const contentType = response.headers.get("Content-Type") ?? "";
+  if (contentType.includes("application/json")) {
+    try {
+      const data: T = await response.json();
+      return data;
+    } catch {
+      const raw = await response.text();
+      console.warn("Failed to parse JSON. Raw response:", raw);
+      throw new Error("Failed to parse response as JSON.");
+    }
+  } else {
+    const text = await response.text();
+    console.warn("Expected JSON but got:", text);
+    throw new Error("Expected JSON but received non-JSON content.");
+  }
 };

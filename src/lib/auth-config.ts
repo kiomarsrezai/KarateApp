@@ -31,6 +31,7 @@ export const authConfig = {
   pages: {
     signIn: "/login",
   },
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {

@@ -5,7 +5,6 @@ import { getRoleByStartPath } from "./components/features/user/utils";
 export const middleware = auth((req) => {
   const pathname = req.nextUrl.pathname;
   const user = req.auth?.user;
-  console.log(user);
 
   const panel = getRoleByStartPath(pathname);
   const hasAccess = user?.roles.includes(panel?.value ?? 99);
