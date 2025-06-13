@@ -8,6 +8,8 @@ import { QueryProvider } from "./QueryProvider";
 import { Toaster } from "~/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "کاراته",
   description: "کاراته",
