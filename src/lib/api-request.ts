@@ -73,7 +73,9 @@ export const apiRequest = async <T>(
       errorMsg = response.statusText;
     }
 
-    toast.error(errorMsg);
+    if (typeof window !== "undefined") {
+      toast.error(errorMsg);
+    }
     throw new Error(errorMsg);
   }
 
@@ -88,13 +90,15 @@ export const apiRequest = async <T>(
       const data: T = await response.json();
       return data;
     } catch {
-      const raw = await response.text();
-      console.warn("Failed to parse JSON. Raw response:", raw);
-      throw new Error("Failed to parse response as JSON.");
+      // const raw = await response.text();
+      // console.warn("Failed to parse JSON. Raw response:", raw);
+      // throw new Error("Failed to parse response as JSON.");
+      return null as T;
     }
   } else {
-    const text = await response.text();
-    console.warn("Expected JSON but got:", text);
-    throw new Error("Expected JSON but received non-JSON content.");
+    // const text = await response.text();
+    // console.warn("Expected JSON but got:", text);
+    // throw new Error("Expected JSON but received non-JSON content.");
+    return null as T;
   }
 };
