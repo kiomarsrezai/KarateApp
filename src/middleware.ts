@@ -6,6 +6,10 @@ export const middleware = auth((req) => {
   const pathname = req.nextUrl.pathname;
   const user = req.auth?.user;
 
+  if (pathname.startsWith("/api/")) {
+    return;
+  }
+
   const panel = getRoleByStartPath(pathname);
   const hasAccess = user?.roles.includes(panel?.value ?? 99);
 

@@ -127,6 +127,20 @@ const Logos = () => {
   return (
     <div className="flex flex-col items-center">
       <Logo className="size-40 md:size-[220px] self-end md:self-start" />
+      <Image
+        src={"/img/WKF.png"}
+        alt="WKF"
+        width={200}
+        height={200}
+        className="mt-3"
+      />
+      <Image
+        src={"/img/IKF.png"}
+        alt="IKF"
+        width={200}
+        height={200}
+        className="mt-3"
+      />
       <div className="w-[130px] mx-auto mt-10">
         <p className="text-center mb-1">نماد ها</p>
         <Separator />
