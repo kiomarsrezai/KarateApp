@@ -26,7 +26,6 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
-import { UploadIcon } from "lucide-react";
 import { Checkbox } from "~/components/ui/checkbox";
 import { useMutation } from "@tanstack/react-query";
 import { completeProfileApi } from "../api";
@@ -40,6 +39,7 @@ import { CityInput } from "../../location/CityInput";
 import { Label } from "~/components/ui/label";
 import { roles } from "../../user/config";
 import { getRoleByValue } from "../../user/utils";
+import { FilePickerCard } from "~/components/common/input/FilePickerCard";
 
 const FormSchema = object({
   selectedRoles: pipe(
@@ -341,13 +341,7 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
             <FormItem>
               <FormLabel>بارگذاری مدارک ورزشی</FormLabel>
               <FormControl>
-                <div
-                  className="border-2 border-dashed h-60 rounded-xl flex items-center justify-evenly"
-                  {...field}
-                >
-                  <p className="text-layer-foreground/50">بارگذاری فایل</p>
-                  <UploadIcon className="size-10 text-layer-foreground/50" />
-                </div>
+                <FilePickerCard {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
