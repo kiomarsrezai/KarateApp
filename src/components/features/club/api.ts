@@ -7,6 +7,6 @@ export const getClubsApi = async () => {
 };
 
 export const getClubApi = async (id: number) => {
-  const res = await apiRequest<Club>(`/Club/${id}`, { method: "GET" });
+  const res = await apiRequest<Club>(`/Club/GetById/${id}`, { method: "GET" });
   return res;
 };
