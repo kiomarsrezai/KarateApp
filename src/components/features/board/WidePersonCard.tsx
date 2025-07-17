@@ -20,8 +20,8 @@ export const WidePersonCard = ({ person }: WidePersonCardProps) => {
     <Dialog>
       <DialogTrigger asChild>
         <Card className="py-0">
-          <CardContent className="p-3 flex flex-row gap-x-10 py-0 px-0">
-            <div className="rounded-xl overflow-hidden w-1/2">
+          <CardContent className="p-3 flex flex-col sm:flex-row gap-x-10 py-0 px-0">
+            <div className="rounded-xl overflow-hidden w-full sm:w-1/2">
               <AspectRatio ratio={16 / 9}>
                 <Image
                   src={getFilePathWithDefault(person.imagePath)}
@@ -32,7 +32,7 @@ export const WidePersonCard = ({ person }: WidePersonCardProps) => {
                 />
               </AspectRatio>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 p-2">
               <p className="font-semibold">{person.fullName}</p>
               <p className="text-foreground/70">{person.position}</p>
               <p className="text-foreground/70">{person.bio}</p>

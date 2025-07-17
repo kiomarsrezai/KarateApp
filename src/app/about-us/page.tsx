@@ -57,8 +57,8 @@ const AboutUsPage = () => {
         </p>
       </div>
 
-      <div className="mt-20 flex justify-between items-center gap-x-10">
-        <div className="[&>p]:mb-2">
+      <div className="mt-20 flex flex-col sm:flex-row justify-between items-center gap-10">
+        <div className="[&>p]:mb-2 order-2 sm:order-1">
           <p>
             چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم
             است.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
@@ -71,7 +71,7 @@ const AboutUsPage = () => {
             ستون و سطرآنچنان که لازم است.
           </p>
         </div>
-        <div className="rounded-md overflow-hidden w-[600px] shrink-0">
+        <div className="rounded-md overflow-hidden w-full max-w-[600px] shrink-0 order-1 sm:order-2">
           <AspectRatio ratio={16 / 9}>
             <Image
               src={"/img/connect-us.jpg"}

@@ -57,15 +57,15 @@ const HeaderMenu = () => {
       text: "صفحه اصلی",
     },
     {
-      link: "/2",
+      link: "/education",
       text: "آموزش",
     },
     {
-      link: "/3",
+      link: "/news",
       text: "اخبار",
     },
     {
-      link: "/4",
+      link: "/clubs",
       text: "لیست باشگاه ها",
     },
     {
