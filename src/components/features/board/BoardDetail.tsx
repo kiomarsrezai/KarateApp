@@ -10,14 +10,14 @@ type BoardDetailProps = {
 export const BoardDetail = ({ board }: BoardDetailProps) => {
   return (
     <div>
-      <div className="flex justify-between gap-x-20">
+      <div className="flex flex-col sm:flex-row justify-between gap-10 sm:gap-20">
         <div>
           <p className="font-medium">{board.fullName}</p>
           <p>{board.position}</p>
           <p>{board.bio}</p>
         </div>
         <div>
-          <div className="rounded-md overflow-hidden w-[300px]">
+          <div className="rounded-md overflow-hidden sm:w-[300px]">
             <Image
               src={getFilePathWithDefault(board.imagePath)}
               alt="board"
