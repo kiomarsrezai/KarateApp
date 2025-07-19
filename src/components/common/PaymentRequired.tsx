@@ -38,7 +38,7 @@ export const PaymentRequired = () => {
             "bg-primary": mode === 1,
           })}
         ></div>
-        <p>نحوه پرداخت را انتخاب کنید</p>
+        <p>اتصال با درگاه پرداخت</p>
       </Card>
       <Card
         className="p-6 flex flex-row items-center gap-x-4 shadow-none"
@@ -49,7 +49,7 @@ export const PaymentRequired = () => {
             "bg-primary": mode === 2,
           })}
         ></div>
-        <p>نحوه پرداخت را انتخاب کنید</p>
+        <p>واریز کارت به کارت و ارسال تصویر فیش واریزی</p>
       </Card>
       <div className="flex justify-center mt-6">
         <Button
