@@ -52,17 +52,17 @@ export const authConfig = {
      */
   ],
   callbacks: {
-    jwt: async ({ token }) => {
-      if (!token.sub) {
-        return token;
+    jwt: async ({ token: prevData }) => {
+      if (!prevData.sub) {
+        return prevData;
       }
 
-      const jwt = token.sub;
+      const jwt = prevData.sub;
 
       const findedUser = await getUserByToken(jwt);
 
       return {
-        ...token,
+        ...prevData,
         ...findedUser,
         token: jwt,
       };

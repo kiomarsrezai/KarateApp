@@ -47,7 +47,7 @@ export const apiRequest = async <T>(
     url: formattedUrl,
     headers,
     data: options.formData || options.body,
-    timeout: 30_000,
+    timeout: 60_000,
     onUploadProgress: options.onUploadProgress
       ? (event) => {
           const percent = Math.round((event.loaded / (event.total ?? 1)) * 100);
