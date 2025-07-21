@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: React.PropsWithChildren) => {
   return (
-    <SessionProvider>
+    <SessionProvider refetchOnWindowFocus={false}>
       <QueryProvider>
         <RtlProvider>
           <html lang="fa" dir="rtl">
