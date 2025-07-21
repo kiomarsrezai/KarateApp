@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { CommingSoon } from "~/components/common/CommingSoon";
+import { DashboardComingSoon } from "~/components/seactions/layout/DashboardComingSoon";
 import { PaymentRequired } from "~/components/common/PaymentRequired";
 
 export const PageContent = () => {
@@ -10,7 +10,7 @@ export const PageContent = () => {
   const isPaid = !!user?.membershipPaidDate;
 
   if (isPaid) {
-    return <CommingSoon />;
+    return <DashboardComingSoon />;
   }
 
   return <PaymentRequired />;

@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-export const ComingSoon = () => {
+type ComingSoonProps = {
+  content?: string;
+};
+
+export const ComingSoon = ({
+  content = "این صفحه به زودی اضافه خواهد شد",
+}: ComingSoonProps) => {
   return (
     <div className="flex justify-center items-center flex-col gap-4 h-[400px]">
       <Image
@@ -10,7 +16,7 @@ export const ComingSoon = () => {
         className="w-[50px]"
         alt="coming soon"
       />
-      <p className="text-black/70">این صفحه به زودی اضافه خواهد شد</p>
+      <p className="text-black/70">{content}</p>
     </div>
   );
 };
