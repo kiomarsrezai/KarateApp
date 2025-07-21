@@ -30,14 +30,19 @@ import { getRoleByValue } from "~/components/features/user/utils";
 type MenuItemShape = {
   text: string;
   link: string;
+  rightSpace?: boolean;
 };
 
-const HeaderMenuItem = ({ link, text }: MenuItemShape) => {
+const HeaderMenuItem = ({ link, text, rightSpace = false }: MenuItemShape) => {
   const pathname = usePathname();
   const isActive = pathname === link;
 
   return (
-    <li>
+    <li
+      className={cn("lg:text-sm xl:text-base", {
+        "mr-auto": rightSpace,
+      })}
+    >
       <Link
         className={cn({
           "border-b border-primary text-primary": isActive,
@@ -69,12 +74,17 @@ const HeaderMenu = () => {
       text: "لیست باشگاه ها",
     },
     {
-      link: "/about-us",
-      text: "درباره ما",
-    },
-    {
       link: "/board",
       text: "هیئت رئیسه",
+    },
+    {
+      link: "/representatives",
+      text: "نماینده ها",
+    },
+    {
+      rightSpace: true,
+      link: "/about-us",
+      text: "درباره ما",
     },
     {
       link: "/connect-us",
@@ -82,9 +92,14 @@ const HeaderMenu = () => {
     },
   ];
   return (
-    <ul className="flex flex-col md:flex-row md:items-center gap-6">
+    <ul className="flex flex-col lg:flex-row lg:items-center gap-6">
       {menuItems.map((menuItem, i) => (
-        <HeaderMenuItem key={i} text={menuItem.text} link={menuItem.link} />
+        <HeaderMenuItem
+          key={i}
+          text={menuItem.text}
+          link={menuItem.link}
+          rightSpace={menuItem.rightSpace}
+        />
       ))}
     </ul>
   );
@@ -112,15 +127,15 @@ const User = () => {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <Button
-        className="max-md:size-8 bg-white md:bg-primary text-black md:text-primary-foreground md:!px-10 rounded-full"
+        className="max-lg:size-8 bg-white lg:bg-primary text-black lg:text-primary-foreground lg:!px-10 rounded-full"
         onClick={onClick}
         disabled={isLoading}
       >
-        <span className="hidden md:block">ورود به پنل کاربری</span>
-        <UserIcon className="size-4 md:hidden" />
+        <span className="hidden lg:block">ورود به پنل کاربری</span>
+        <UserIcon className="size-4 lg:hidden" />
       </Button>
       <DialogContent className="!max-w-6xl py-10 bg-layer text-layer-foreground border-border/30">
-        <div className="absolute left-10 bottom-10 opacity-30 max-md:hidden">
+        <div className="absolute left-10 bottom-10 opacity-30 max-lg:hidden">
           <ArtDesign side="Left" />
         </div>
         <div className="absolute right-10 top-10 opacity-30">
@@ -139,7 +154,7 @@ const User = () => {
           </DialogTitle>
         </DialogHeader>
         <DialogMainSection>
-          <div className="md:max-w-1/2 mx-auto pt-10">
+          <div className="lg:max-w-1/2 mx-auto pt-10">
             <LoginProcess onDone={() => setDialogOpen(false)} />
           </div>
         </DialogMainSection>
@@ -160,9 +175,9 @@ const SocialMediaItem = ({ icon: Icon }: SocialMediaShape) => {
         <a
           href="http://google.com"
           target="_blank"
-          className="!size-9 bg-transparent md:bg-primary"
+          className="!size-9 bg-transparent lg:bg-primary"
         >
-          <Icon className="size-4 md:size-[25px]" />
+          <Icon className="size-4 lg:size-[25px]" />
         </a>
       </Button>
     </li>
@@ -173,7 +188,7 @@ const SocialMedia = () => {
   const socialMedia: SocialMediaShape[] = [{ icon: InstagramIcon }];
 
   return (
-    <ul className="md:me-2">
+    <ul className="lg:me-2">
       {socialMedia.map((item, i) => (
         <SocialMediaItem key={i} icon={item.icon} />
       ))}
@@ -191,7 +206,7 @@ const SheetMenu = () => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger className="md:hidden">
+      <SheetTrigger className="lg:hidden">
         <MenuIcon className="size-4" />
       </SheetTrigger>
       <SheetContent className="bg-layer text-layer-foreground border-layer-foreground/40 pr-6">
@@ -212,22 +227,23 @@ const SheetMenu = () => {
 // the header
 export const Header = () => {
   return (
-    <header className="bg-layer text-layer-foreground z-50 sticky top-0">
-      <div className="flex items-center py-4 container">
+    <header className="bg-layer text-layer-foreground z-50 sticky top-0 p-4">
+      <div className="flex items-center">
         <SheetMenu />
-        <div className="hidden md:block">
+        <div className="hidden lg:block grow">
           <HeaderMenu />
         </div>
-        <span className="flex-1"></span>
-        <div className="hidden md:block">
+        <div className="hidden lg:block mr-4">
           <SocialMedia />
         </div>
-        <User />
+        <div className="mr-auto lg:mr-0">
+          <User />
+        </div>
       </div>
 
-      <div className="absolute left-1/2 top-1/2 -translate-y-1/2 md:-translate-y-0 md:top-4 -translate-x-1/2">
+      <div className="absolute left-1/2 top-1/2 -translate-y-1/2 lg:-translate-y-0 lg:top-4 -translate-x-1/2">
         <Link href={"/"}>
-          <Logo className="w-10 md:w-36" />
+          <Logo className="w-10 lg:w-36" />
         </Link>
       </div>
     </header>
