@@ -11,7 +11,7 @@ type Body = {
 };
 
 type Result = {
-  id: number;
+  link: string;
 };
 
 export const payPlanApi = async (body: Body) => {
