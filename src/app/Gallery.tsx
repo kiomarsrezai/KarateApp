@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Card } from "~/components/ui/card";
@@ -15,6 +14,8 @@ import { cn } from "~/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
 import { GallerySlide } from "~/components/features/gallery/types";
+import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
+import { CommingSoon } from "~/components/common/CommingSoon";
 
 type GalleryProps = {
   slides: GallerySlide[];
@@ -69,11 +70,16 @@ export const Gallery = ({ slides }: GalleryProps) => {
                   <div className="h-[6px] bg-primary flex-1 rounded-s-full"></div>
                 </div>
                 <div className="flex justify-center mt-8">
-                  <Button asChild>
-                    <Link className="w-1/2 !rounded-full" href={"/"}>
-                      ثبت نام در کلاس های آموزشی
-                    </Link>
-                  </Button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="w-1/2 !rounded-full">
+                        ثبت نام در کلاس های آموزشی
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <CommingSoon content="این بخش به زودی در دسترس قرار خواهد گرفت" />
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
             </Card>
