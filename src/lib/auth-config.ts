@@ -58,8 +58,9 @@ export const authConfig = {
       }
 
       const jwt = prevData.sub;
-
+      console.log({ jwt });
       const findedUser = await getUserByToken(jwt);
+      console.log({ findedUser });
 
       return {
         ...prevData,

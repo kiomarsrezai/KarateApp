@@ -131,7 +131,7 @@ const Logos = () => {
         <p className="text-center mb-1">نماد ها</p>
         <Separator />
       </div>
-      <div className="flex gap-x-4 mt-4">
+      <div className="flex flex-col lg:flex-row gap-4 mt-4">
         <Image
           src={"/img/WKF.png"}
           alt="WKF"
@@ -147,7 +147,10 @@ const Logos = () => {
           className="mt-3 size-[100px]"
         />
 
-        <Separator orientation="vertical" />
+        <div className="max-lg:hidden">
+          <Separator orientation="vertical" />
+        </div>
+        <Separator className="lg:hidden" />
 
         <a
           referrerPolicy="origin"
@@ -175,12 +178,12 @@ export const Footer = () => {
     <footer className="bg-layer text-layer-foreground pt-10">
       <div className="flex gap-10 container">
         <MenuList />
-        <span className="flex-1"></span>
-        <div className="hidden md:block w-[500px]">
+        <div className="hidden md:block w-[500px] mr-auto">
           <AddressList />
         </div>
-        <span className="flex-1"></span>
-        <Logos />
+        <div className="mr-auto">
+          <Logos />
+        </div>
       </div>
 
       <div className="text-center py-10 pb-4 text-xs md:text-base">

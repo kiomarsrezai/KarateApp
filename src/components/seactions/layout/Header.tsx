@@ -40,7 +40,7 @@ const HeaderMenuItem = ({ link, text, rightSpace = false }: MenuItemShape) => {
   return (
     <li
       className={cn("lg:text-sm xl:text-base", {
-        "mr-auto": rightSpace,
+        "lg:mr-auto": rightSpace,
       })}
     >
       <Link
