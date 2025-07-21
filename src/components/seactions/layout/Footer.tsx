@@ -46,23 +46,23 @@ const MenuList = () => {
       text: "صفحه اصلی",
     },
     {
-      link: "/2",
+      link: "/connect-us",
       text: "تماس با ما",
     },
     {
-      link: "/3",
+      link: "/about-us",
       text: "درباره ما",
     },
     {
-      link: "/4",
+      link: "/clubs",
       text: "لیست باشگاه ها",
     },
     {
-      link: "/5",
+      link: "/news",
       text: "اخبار",
     },
     {
-      link: "/6",
+      link: "/education",
       text: "آموزش",
     },
   ];
@@ -126,40 +126,45 @@ const AddressList = () => {
 const Logos = () => {
   return (
     <div className="flex flex-col items-center">
-      <Logo className="size-40 md:size-[220px] self-end md:self-start" />
-      <Image
-        src={"/img/WKF.png"}
-        alt="WKF"
-        width={200}
-        height={200}
-        className="mt-3"
-      />
-      <Image
-        src={"/img/IKF.png"}
-        alt="IKF"
-        width={200}
-        height={200}
-        className="mt-3"
-      />
-      <div className="w-[130px] mx-auto mt-10">
+      <Logo className="size-40 md:size-[160px] self-end md:self-center" />
+      <div className="w-[130px] mx-auto mt-6">
         <p className="text-center mb-1">نماد ها</p>
         <Separator />
       </div>
-      <a
-        referrerPolicy="origin"
-        target="_blank"
-        href="https://trustseal.enamad.ir/?id=600824&Code=0xLXI14GJWvlhgUJb4CBcmGIPUhBAvyN"
-        className="mt-4"
-      >
+      <div className="flex gap-x-4 mt-4">
         <Image
-          referrerPolicy="origin"
-          src="https://trustseal.enamad.ir/logo.aspx?id=600824&Code=0xLXI14GJWvlhgUJb4CBcmGIPUhBAvyN"
-          alt=""
-          className="cursor-pointer"
-          width={130}
-          height={130}
+          src={"/img/WKF.png"}
+          alt="WKF"
+          width={100}
+          height={100}
+          className="mt-3 size-[100px]"
         />
-      </a>
+        <Image
+          src={"/img/IKF.png"}
+          alt="IKF"
+          width={100}
+          height={100}
+          className="mt-3 size-[100px]"
+        />
+
+        <Separator orientation="vertical" />
+
+        <a
+          referrerPolicy="origin"
+          target="_blank"
+          href="https://trustseal.enamad.ir/?id=600824&Code=0xLXI14GJWvlhgUJb4CBcmGIPUhBAvyN"
+          className="mt-4"
+        >
+          <Image
+            referrerPolicy="origin"
+            src="https://trustseal.enamad.ir/logo.aspx?id=600824&Code=0xLXI14GJWvlhgUJb4CBcmGIPUhBAvyN"
+            alt=""
+            className="cursor-pointer size-[100px]"
+            width={130}
+            height={130}
+          />
+        </a>
+      </div>
     </div>
   );
 };

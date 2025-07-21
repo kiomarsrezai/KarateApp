@@ -13,11 +13,8 @@ import {
 // feature components
 const FeaturesContent = () => {
   const items = [
-    "توضحات اول",
-    "توضحات دوم",
-    "توضحات سوم",
-    "توضحات چهارم",
-    "توضحات پنجم",
+    "ثبت نام در سایت و تشکیل پنل کاربری",
+    "به زودی دیگر خدمات در دسترس قرار میگیرد",
   ];
   return (
     <DialogContent className="bg-[#FAF3E2]">
