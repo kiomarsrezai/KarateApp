@@ -1,12 +1,15 @@
 "use client";
 
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, XIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { getRoleByValue } from "~/components/features/user/utils";
 import { Button } from "~/components/ui/button";
 
-export const PageContent = () => {
+type PageContentProps = {
+  isPaymentSuccess: boolean;
+};
+export const PageContent = ({ isPaymentSuccess }: PageContentProps) => {
   const { status, data: session } = useSession();
   const router = useRouter();
 
@@ -27,11 +30,17 @@ export const PageContent = () => {
       <div className="bg-black py-62 flex flex-col gap-y-10">
         <div className="flex justify-center items-center gap-x-2">
           <div className="size-6 bg-white rounded-full flex justify-center items-center">
-            <CheckIcon className="size-5" />
+            {isPaymentSuccess ? (
+              <CheckIcon className="size-5" />
+            ) : (
+              <XIcon className="size-5" />
+            )}
           </div>
 
           <p className="text-3xl text-center text-white">
-            پرداخت با موفقیت انجام شد
+            {isPaymentSuccess
+              ? "پرداخت با موفقیت انجام شد"
+              : "پرداخت با مشکل مواجه شد"}
           </p>
         </div>
 

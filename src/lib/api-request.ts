@@ -27,7 +27,8 @@ type Options = {
   body?: object;
   formData?: FormData;
   forceToken?: string;
-  onUploadProgress?: (percent: number) => void; //
+  onUploadProgress?: (percent: number) => void;
+  params?: Record<string, string>;
 };
 
 export const apiRequest = async <T>(
@@ -45,6 +46,7 @@ export const apiRequest = async <T>(
   const axiosOptions: AxiosRequestConfig = {
     method,
     url: formattedUrl,
+    params: options.params,
     headers,
     data: options.formData || options.body,
     timeout: 60_000,
