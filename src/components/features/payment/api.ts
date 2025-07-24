@@ -4,6 +4,7 @@ type PayBody = {
   redirectUrl: string;
   userId: string;
   isTest: boolean;
+  api: string;
 };
 
 type PayResult = {

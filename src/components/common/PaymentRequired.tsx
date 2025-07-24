@@ -61,6 +61,7 @@ export const PaymentRequired = () => {
       userId: String(user?.id ?? ""),
       isTest: false,
       redirectUrl: `${window.origin}/payment-result`,
+      api: "rest",
     });
   };
   return (
