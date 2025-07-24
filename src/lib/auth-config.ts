@@ -27,7 +27,14 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // Refresh token every 24h if user is active
+  },
+  jwt: {
+    maxAge: 60 * 60 * 24 * 7, // 7 days (same as session)
+  },
   pages: {
     signIn: "/login",
   },
