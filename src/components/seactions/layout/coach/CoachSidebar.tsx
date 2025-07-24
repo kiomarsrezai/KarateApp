@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { roles } from "~/components/features/user/config";
+import { getFullName } from "~/components/features/user/utils";
 import { Button } from "~/components/ui/button";
 import { Collapsible, CollapsibleTrigger } from "~/components/ui/collapsible";
 import {
@@ -135,7 +136,7 @@ const CoachSidebarHeader = () => {
 
   return (
     <SidebarHeader className="bg-coach text-coach-foreground flex-row">
-      <p className="text-xs">{'"نام کاربری"'}</p>
+      <p className="text-xs">{getFullName(user)}</p>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="bg-black/20 text-xs flex items-center gap-x-1 px-1">
           <span>مربی</span>
