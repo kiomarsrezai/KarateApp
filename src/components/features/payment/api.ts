@@ -1,13 +1,9 @@
 import { apiRequest } from "~/lib/api-request";
 
 type PayBody = {
-  amount: number;
   redirectUrl: string;
-  factorNumber: string;
-  name: string;
-  description: string;
-  mobile: string;
-  email: string;
+  userId: string;
+  isTest: boolean;
 };
 
 type PayResult = {

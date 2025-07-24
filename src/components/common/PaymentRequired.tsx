@@ -58,12 +58,8 @@ export const PaymentRequired = () => {
 
   const onPay = () => {
     mutation.mutate({
-      factorNumber: String(user?.id ?? ""),
-      amount: 1_000_000,
-      name: user?.name ?? "",
-      description: "پرداختی اشتراک",
-      email: user?.email ?? "",
-      mobile: user?.phoneNumber ?? "",
+      userId: String(user?.id ?? ""),
+      isTest: false,
       redirectUrl: `${window.origin}/payment-result`,
     });
   };
