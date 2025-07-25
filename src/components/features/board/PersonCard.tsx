@@ -28,7 +28,7 @@ export const PersonCard = ({ person }: PersonCardProps) => {
                   alt="person"
                   width={200}
                   height={200}
-                  className="size-full"
+                  className="size-full object-cover"
                 />
               </AspectRatio>
             </div>
