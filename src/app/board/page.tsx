@@ -1,10 +1,22 @@
-import { BoardMembers } from "./BoardMembers";
+import { SearchParams } from "nuqs";
+import { IntroductionMembers } from "./IntroductionMembers";
+import { loadSearchParams } from "./searchParams";
+import { IntroductionMenu } from "./IntroductionMenu";
 
-const BoardPage = () => {
+type BoardPageProps = {
+  searchParams: Promise<SearchParams>;
+};
+
+const BoardPage = async ({ searchParams }: BoardPageProps) => {
+  const { filter } = await loadSearchParams(searchParams);
+
   return (
     <div className="mt-16 container">
-      <h2 className="font-bold text-2xl">اعضای هیئت رئیسه انجمن</h2>
-      <BoardMembers />
+      <h2 className="font-bold text-2xl">معرفی اعضا</h2>
+      <div className="flex gap-x-10 mb-10 mt-10 ">
+        <IntroductionMenu />
+        <IntroductionMembers filter={filter} />
+      </div>
     </div>
   );
 };

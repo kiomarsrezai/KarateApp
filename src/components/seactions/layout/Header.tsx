@@ -75,7 +75,7 @@ const HeaderMenu = () => {
     },
     {
       link: "/board",
-      text: "هیئت رئیسه",
+      text: "معرفی",
     },
     {
       link: "/representatives",

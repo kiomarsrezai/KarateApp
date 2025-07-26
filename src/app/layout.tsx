@@ -7,6 +7,7 @@ import { shabnamFont } from "~/font/font";
 import { QueryProvider } from "./QueryProvider";
 import { Toaster } from "~/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +25,9 @@ const RootLayout = ({ children }: React.PropsWithChildren) => {
             <body className={`${shabnamFont.className} antialiased`}>
               <div className="flex flex-col min-h-screen">
                 <Header />
-                <main className="flex-1">{children}</main>
+                <main className="flex-1">
+                  <NuqsAdapter>{children}</NuqsAdapter>
+                </main>
                 <div className="relative z-50">
                   <Footer />
                 </div>

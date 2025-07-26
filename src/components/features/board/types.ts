@@ -6,4 +6,5 @@ export type BoardMember = {
   imagePath: string;
   bio: string;
   resumeHtml: string;
+  boardMemberTypeId: number;
 };
