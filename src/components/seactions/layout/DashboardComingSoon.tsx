@@ -3,7 +3,7 @@ type CommingSoonProps = {
 };
 
 export const DashboardComingSoon = ({
-  content = "این خدمات به زودی در دسترس قرار خواهد گرفت",
+  content = "در انتظار تایید مدارک و صدور کارت عضویت",
 }: CommingSoonProps) => {
   return (
     <div className="py-10 text-center">

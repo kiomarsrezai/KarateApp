@@ -9,7 +9,7 @@ export const PageContent = () => {
   const user = session?.user;
   const isPaid = !!user?.membershipPaidDate;
 
-  if (isPaid) {
+  if (!isPaid) {
     return <DashboardComingSoon />;
   }
 
