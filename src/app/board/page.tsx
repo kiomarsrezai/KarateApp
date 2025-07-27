@@ -13,7 +13,7 @@ const BoardPage = async ({ searchParams }: BoardPageProps) => {
   return (
     <div className="mt-16 container">
       <h2 className="font-bold text-2xl">معرفی اعضا</h2>
-      <div className="flex gap-x-10 mb-10 mt-10 ">
+      <div className="flex flex-col sm:flex-row max-sm:gap-y-4 sm:gap-x-10 mb-10 mt-10 ">
         <IntroductionMenu />
         <IntroductionMembers filter={filter} />
       </div>
