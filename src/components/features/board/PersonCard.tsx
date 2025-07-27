@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { BoardDetail } from "./BoardDetail";
+import { EditorViewer } from "~/components/common/editor-viewer";
 
 type PersonCardProps = {
   person: BoardMember;
@@ -35,7 +36,9 @@ export const PersonCard = ({ person }: PersonCardProps) => {
             <div className="mt-2">
               <p className="font-semibold">{person.fullName}</p>
               <p className="text-foreground/70">{person.position}</p>
-              <p className="text-foreground/70">{person.bio}</p>
+              <div className="text-foreground/70">
+                <EditorViewer content={person.bio} />
+              </div>
             </div>
           </CardContent>
         </Card>

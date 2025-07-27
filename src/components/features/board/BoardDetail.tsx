@@ -3,6 +3,7 @@ import { BoardMember } from "./types";
 import { getFilePathWithDefault } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
 import { DialogClose } from "~/components/ui/dialog";
+import { EditorViewer } from "~/components/common/editor-viewer";
 
 type BoardDetailProps = {
   board: BoardMember;
@@ -14,7 +15,9 @@ export const BoardDetail = ({ board }: BoardDetailProps) => {
         <div>
           <p className="font-medium">{board.fullName}</p>
           <p>{board.position}</p>
-          <p>{board.bio}</p>
+          <div className="text-foreground/70">
+            <EditorViewer content={board.bio} />
+          </div>
         </div>
         <div>
           <div className="rounded-md overflow-hidden sm:w-[300px]">

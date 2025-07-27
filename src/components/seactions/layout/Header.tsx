@@ -78,10 +78,6 @@ const HeaderMenu = () => {
       text: "معرفی",
     },
     {
-      link: "/representatives",
-      text: "نماینده ها",
-    },
-    {
       rightSpace: true,
       link: "/about-us",
       text: "درباره ما",
