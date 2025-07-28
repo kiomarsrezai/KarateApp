@@ -26,7 +26,7 @@ export function DatePicker({ onChange, value }: DatePickerProps) {
           )}
         >
           <CalendarIcon />
-          {value ? formatDate(value, "PPP") : <span>Pick a date</span>}
+          {value ? formatDate(value, "PPP") : <span>انتخاب تاریخ</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

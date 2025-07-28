@@ -63,7 +63,7 @@ const FormSchema = pipe(
     address: pipe(string(), minLength(1, "آدرس ضروری است")),
     pOstalCode: pipe(string(), minLength(1, "کد پستی ضروری است")),
     nationalCode: pipe(string(), minLength(1, "کد ملی ضروری است")),
-    birthDate: date(),
+    birthDate: date("تاریخ تولد ضروری است"),
     phoneNumberFamily: pipe(
       string(),
       minLength(1, "شماره موبایل ضروری است"),
@@ -350,7 +350,7 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>شماره تلفن والدین</FormLabel>
+              <FormLabel>شماره تلفن یک نفر همراه</FormLabel>
               <FormControl>
                 <Input placeholder="تایپ کنید" {...field} />
               </FormControl>
