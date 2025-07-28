@@ -41,39 +41,56 @@ import { roles } from "../../user/config";
 import { getRoleByValue } from "../../user/utils";
 import { FilePickerCard } from "~/components/common/input/FilePickerCard";
 
-const FormSchema = object({
-  selectedRoles: pipe(
-    array(picklist(roles.map((role) => role.value))),
-    minLength(1, "حداقل یه مورد را انتخاب کنید")
-  ),
-  name: pipe(string(), minLength(1, "نام ضروری است")),
-  family: pipe(string(), minLength(1, "نام خانوادگی ضروری است")),
-  fatherName: pipe(string(), minLength(1, "نام پدر ضروری است")),
-  phoneNumber: pipe(
-    string(),
-    minLength(1, "شماره موبایل ضروری است"),
-    check(
-      (value) => value.startsWith("09"),
-      "شماره موبایل باید با 09 شروع شود"
+const FormSchema = pipe(
+  object({
+    selectedRoles: pipe(
+      array(picklist(roles.map((role) => role.value))),
+      minLength(1, "حداقل یه مورد را انتخاب کنید")
     ),
-    length(11, "شماره موبایل باید 11 رقمی باشد")
-  ),
-  cityId: number("شهر ضروری است"),
-  address: pipe(string(), minLength(1, "آدرس ضروری است")),
-  pOstalCode: pipe(string(), minLength(1, "کد پستی ضروری است")),
-  nationalCode: pipe(string(), minLength(1, "کد ملی ضروری است")),
-  birthDate: date(),
-  phoneNumberFamily: pipe(
-    string(),
-    minLength(1, "شماره موبایل ضروری است"),
-    check(
-      (value) => value.startsWith("09"),
-      "شماره موبایل باید با 09 شروع شود"
+    name: pipe(string(), minLength(1, "نام ضروری است")),
+    family: pipe(string(), minLength(1, "نام خانوادگی ضروری است")),
+    fatherName: pipe(string(), minLength(1, "نام پدر ضروری است")),
+    phoneNumber: pipe(
+      string(),
+      minLength(1, "شماره موبایل ضروری است"),
+      check(
+        (value) => value.startsWith("09"),
+        "شماره موبایل باید با 09 شروع شود"
+      ),
+      length(11, "شماره موبایل باید 11 رقمی باشد")
     ),
-    length(11, "شماره موبایل باید 11 رقمی باشد")
-  ),
-  rezumeFile: nullable(pipe(string(), minLength(1, "مدرک ضروری است"))),
-});
+    cityId: number("شهر ضروری است"),
+    address: pipe(string(), minLength(1, "آدرس ضروری است")),
+    pOstalCode: pipe(string(), minLength(1, "کد پستی ضروری است")),
+    nationalCode: pipe(string(), minLength(1, "کد ملی ضروری است")),
+    birthDate: date(),
+    phoneNumberFamily: pipe(
+      string(),
+      minLength(1, "شماره موبایل ضروری است"),
+      check(
+        (value) => value.startsWith("09"),
+        "شماره موبایل باید با 09 شروع شود"
+      ),
+      length(11, "شماره موبایل باید 11 رقمی باشد")
+    ),
+    rezumeFile: pipe(string("فایل ضروری است"), minLength(1, "فایل ضروری است")),
+    avatar: pipe(string("فایل ضروری است"), minLength(1, "فایل ضروری است")),
+    refreeFile: nullable(string("فایل ضروری است")),
+    coachFile: nullable(string("فایل ضروری است")),
+  }),
+  check((input) => {
+    if (input.selectedRoles.includes(3)) {
+      return input.coachFile !== null;
+    }
+    return true;
+  }, "فایل ضروری است"),
+  check((input) => {
+    if (input.selectedRoles.includes(4)) {
+      return input.refreeFile !== null;
+    }
+    return true;
+  }, "فایل ضروری است")
+);
 
 // locations
 type locationInputProps = {
@@ -129,8 +146,11 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
       phoneNumber: authStore.phoneNumber ?? "",
       nationalCode: "",
       pOstalCode: "",
-      selectedRoles: [],
-      rezumeFile: null,
+      selectedRoles: [2],
+      rezumeFile: undefined,
+      avatar: undefined,
+      refreeFile: undefined,
+      coachFile: undefined,
     },
   });
 
@@ -156,6 +176,11 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
   const onSubmit = form.handleSubmit((values) => {
     mutation.mutate(values);
   });
+
+  // roles
+  const selectedRoles = form.watch("selectedRoles");
+  const isCoach = selectedRoles.includes(3);
+  const isReferee = selectedRoles.includes(4);
 
   return (
     <Form {...form}>
@@ -335,18 +360,64 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
         />
 
         <FormField
-          name="rezumeFile"
+          name="avatar"
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>بارگذاری مدارک ورزشی</FormLabel>
+              <FormLabel>بارگذاری عکس پرسنلی</FormLabel>
               <FormControl>
-                <FilePickerCard {...field} />
+                <FilePickerCard {...field} type="profile" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <FormField
+          name="rezumeFile"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>یارگزاری تصویر آخرین مدرک کمربند</FormLabel>
+              <FormControl>
+                <FilePickerCard {...field} type="certificate" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {isCoach && (
+          <FormField
+            name="coachFile"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>بارگذاری مدارک مربیگری</FormLabel>
+                <FormControl>
+                  <FilePickerCard {...field} type="coach" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
+        {isReferee && (
+          <FormField
+            name="refreeFile"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>بارگزاری تصویر مدارک داوری</FormLabel>
+                <FormControl>
+                  <FilePickerCard {...field} type="refree" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <Button className="rounded-full">ثبت اطلاعات</Button>
       </form>

@@ -45,14 +45,15 @@ const FileCard = () => {
 type FilePickerCardProps = {
   value: null | string;
   onChange: (newValue: null | string) => void;
+  type: string;
 };
-export const FilePickerCard = ({ onChange, value }: FilePickerCardProps) => {
+export const FilePickerCard = ({
+  onChange,
+  value,
+  type,
+}: FilePickerCardProps) => {
   return (
-    <FileUploaderContainer
-      value={value}
-      onChangeValue={onChange}
-      type="certificate"
-    >
+    <FileUploaderContainer value={value} onChangeValue={onChange} type={type}>
       <FileCard />
     </FileUploaderContainer>
   );
