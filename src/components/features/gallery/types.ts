@@ -1,6 +1,6 @@
 export type GallerySlide = {
   id: number;
   title: string;
-  url: string;
+  fileName: string;
   uploadDate: Date;
 };

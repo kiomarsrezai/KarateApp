@@ -10,7 +10,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "~/components/ui/carousel";
-import { cn } from "~/lib/utils";
+import { cn, getFilePathWithDefault } from "~/lib/utils";
 import Autoplay from "embla-carousel-autoplay";
 import Fade from "embla-carousel-fade";
 import { GallerySlide } from "~/components/features/gallery/types";
@@ -48,7 +48,7 @@ export const Gallery = ({ slides }: GalleryProps) => {
             <CarouselItem key={slide.id}>
               <Card className="h-[600px] max-h-screen p-0 relative border-none">
                 <Image
-                  src={slide.url}
+                  src={getFilePathWithDefault(slide.fileName)}
                   alt="gallery"
                   width={800}
                   height={800}
