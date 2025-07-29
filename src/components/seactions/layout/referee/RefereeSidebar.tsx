@@ -14,6 +14,7 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogoutBtn } from "~/components/features/auth/LogoutBtn";
 import { roles } from "~/components/features/user/config";
 import { getFullName } from "~/components/features/user/utils";
 import { Button } from "~/components/ui/button";
@@ -167,7 +168,9 @@ export const RefereeSidebar = () => {
       <SidebarContent className="bg-referee text-referee-foreground">
         <RefereeSidebarMenu />
       </SidebarContent>
-      <SidebarFooter className="bg-referee" />
+      <SidebarFooter className="bg-referee">
+        <LogoutBtn />
+      </SidebarFooter>
 
       <RefereeSidebarTrigger />
     </Sidebar>

@@ -111,8 +111,8 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
       selectedRoles: [2],
       rezumeFile: undefined,
       avatar: undefined,
-      refreeFile: undefined,
-      coachFile: undefined,
+      refreeFile: null,
+      coachFile: null,
     },
   });
 
@@ -176,7 +176,9 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
 
         <UserInfoInputs />
 
-        <Button className="rounded-full">ثبت اطلاعات</Button>
+        <Button className="rounded-full" loading={mutation.isPending}>
+          ثبت اطلاعات
+        </Button>
       </form>
     </Form>
   );

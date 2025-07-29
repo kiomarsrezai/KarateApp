@@ -14,6 +14,7 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogoutBtn } from "~/components/features/auth/LogoutBtn";
 import { roles } from "~/components/features/user/config";
 import { getFullName } from "~/components/features/user/utils";
 import { Button } from "~/components/ui/button";
@@ -166,7 +167,10 @@ export const CoachSidebar = () => {
       <SidebarContent className="bg-coach text-coach-foreground">
         <CoachSidebarMenu />
       </SidebarContent>
-      <SidebarFooter className="bg-coach" />
+
+      <SidebarFooter className="bg-coach">
+        <LogoutBtn />
+      </SidebarFooter>
 
       <CoachSidebarTrigger />
     </Sidebar>
