@@ -14,6 +14,7 @@ import { Button } from "~/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { sendOtpApi } from "../api";
 import { useAuthStore } from "./useAuthStore";
+import { PhoneNumberInput } from "~/components/common/input/PhoneNumberInput";
 
 const FormSchema = object({
   phoneNumber: pipe(
@@ -65,9 +66,10 @@ export const PhoneNumberForm = ({ onNext }: PhoneNumberFormProps) => {
             <FormItem>
               <FormLabel>شماره موبایل</FormLabel>
               <FormControl>
-                <Input
+                <PhoneNumberInput
                   placeholder="09 - - - - - - - - -"
                   dir="ltr"
+                  className="text-left"
                   {...field}
                 />
               </FormControl>

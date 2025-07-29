@@ -40,6 +40,7 @@ import { Label } from "~/components/ui/label";
 import { roles } from "../../user/config";
 import { getRoleByValue } from "../../user/utils";
 import { FilePickerCard } from "~/components/common/input/FilePickerCard";
+import { PhoneNumberInput } from "~/components/common/input/PhoneNumberInput";
 
 const FormSchema = pipe(
   object({
@@ -280,11 +281,11 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
             <FormItem>
               <FormLabel>شماره موبایل</FormLabel>
               <FormControl>
-                <Input
+                <PhoneNumberInput
                   placeholder="09 - - - - - - - - -"
                   dir="ltr"
                   disabled
-                  className="!opacity-100"
+                  className="!opacity-100 text-left"
                   {...field}
                 />
               </FormControl>
@@ -352,7 +353,7 @@ export const UserInfoForm = ({ onDone }: PhoneNumberFormProps) => {
             <FormItem>
               <FormLabel>شماره تلفن یک نفر همراه</FormLabel>
               <FormControl>
-                <Input placeholder="تایپ کنید" {...field} />
+                <PhoneNumberInput placeholder="تایپ کنید" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
