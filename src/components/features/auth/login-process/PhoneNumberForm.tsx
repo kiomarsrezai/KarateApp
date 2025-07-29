@@ -9,7 +9,6 @@ import {
 } from "~/components/ui/form";
 import { string, object, pipe, minLength, check, length } from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { sendOtpApi } from "../api";

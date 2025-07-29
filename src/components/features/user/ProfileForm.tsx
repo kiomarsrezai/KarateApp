@@ -19,7 +19,7 @@ import { useMutation } from "@tanstack/react-query";
 import { updateProfileApi } from "./api";
 import { toast } from "sonner";
 import { User } from "./types";
-import { allRoles, roles } from "./config";
+import { allRoles } from "./config";
 import { UserInfoInputs } from "./UserInfoInputs";
 
 const FormSchema = pipe(

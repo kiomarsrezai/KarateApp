@@ -8,11 +8,6 @@ type PhoneNumberInputProps = React.ComponentProps<typeof Input> & {
 
 // Helper function to convert Persian/Arabic numbers to English
 function toEnglishDigits(str: string): string {
-  const persianNumbers = [/[\u06F0-\u06F9]/g, /[\u0660-\u0669]/g];
-  const fixNumbers = (input: string, zeroCharCode: number) =>
-    input.replace(/\d/g, (d) =>
-      String.fromCharCode(d.charCodeAt(0) - zeroCharCode + 48)
-    );
   let result = str;
   // Persian digits
   result = result.replace(/[\u06F0-\u06F9]/g, (d) =>
