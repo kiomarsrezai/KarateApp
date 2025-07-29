@@ -23,4 +23,6 @@ export type User = {
   rezumeFile: null | string;
   birthDate: Date;
   roles: number[];
+  refreeFile: null | string;
+  coachFile: null | string;
 };

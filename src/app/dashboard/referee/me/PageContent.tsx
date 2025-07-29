@@ -1,17 +1,14 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { DashboardComingSoon } from "~/components/seactions/layout/DashboardComingSoon";
-import { PaymentRequired } from "~/components/common/PaymentRequired";
+import { ProfileForm } from "~/components/features/user/ProfileForm";
+import { User } from "~/components/features/user/types";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export const PageContent = () => {
   const { data: session } = useSession();
-  const user = session?.user;
-  const isPaid = !!user?.membershipPaidDate;
 
-  if (isPaid) {
-    return <DashboardComingSoon />;
-  }
+  if (!session?.user) return <Skeleton className="h-50" />;
 
-  return <PaymentRequired />;
+  return <ProfileForm initValue={session?.user as User} />;
 };
