@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AddressList } from "./AddressList";
+import { AddressList } from "../../components/seactions/AddressList";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 
 const ConnectUsPage = () => {
