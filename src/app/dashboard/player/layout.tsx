@@ -1,3 +1,4 @@
+import { MobilePanelSidebarBtn } from "~/components/common/MobilePanelSidebarBtn";
 import { PlayerSidebar } from "~/components/seactions/layout/player/PlayerSidebar";
 import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 
@@ -9,7 +10,10 @@ const PlayerLayout = ({ children }: PlayerLayoutProps) => {
   return (
     <SidebarProvider>
       <PlayerSidebar />
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset>
+        <MobilePanelSidebarBtn />
+        {children}
+      </SidebarInset>
     </SidebarProvider>
   );
 };

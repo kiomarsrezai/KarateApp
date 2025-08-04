@@ -10,6 +10,7 @@ import {
   HomeIcon,
   LucideIcon,
   UserRound,
+  XIcon,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -113,7 +114,7 @@ const CoachSidebarTrigger = () => {
 
   return (
     <Button
-      className="absolute left-0 top-2 rounded-full -translate-x-2/3 size-5 !bg-coach"
+      className="absolute left-0 top-2 rounded-full -translate-x-2/3 size-5 !bg-coach hidden md:block"
       size={"icon"}
       onClick={toggleSidebar}
     >
@@ -127,7 +128,7 @@ const CoachSidebarTrigger = () => {
 };
 
 const CoachSidebarHeader = () => {
-  const { open } = useSidebar();
+  const { open, setOpenMobile } = useSidebar();
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -151,7 +152,26 @@ const CoachSidebarHeader = () => {
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <button
+        className="md:hidden mr-auto"
+        onClick={() => setOpenMobile(false)}
+      >
+        <XIcon className="size-4" />
+      </button>
     </SidebarHeader>
+  );
+};
+
+const CoachSidebarFooter = () => {
+  const { open } = useSidebar();
+
+  if (!open) return null;
+
+  return (
+    <SidebarFooter className="bg-coach">
+      <LogoutBtn />
+    </SidebarFooter>
   );
 };
 
@@ -168,9 +188,7 @@ export const CoachSidebar = () => {
         <CoachSidebarMenu />
       </SidebarContent>
 
-      <SidebarFooter className="bg-coach">
-        <LogoutBtn />
-      </SidebarFooter>
+      <CoachSidebarFooter />
 
       <CoachSidebarTrigger />
     </Sidebar>

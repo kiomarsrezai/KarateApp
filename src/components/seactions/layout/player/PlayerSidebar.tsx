@@ -10,6 +10,7 @@ import {
   HomeIcon,
   LucideIcon,
   UserRound,
+  XIcon,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -113,7 +114,7 @@ const PlayerSidebarTrigger = () => {
 
   return (
     <Button
-      className="absolute left-0 top-2 rounded-full -translate-x-2/3 size-5 !bg-player"
+      className="absolute left-0 top-2 rounded-full -translate-x-2/3 size-5 !bg-player hidden md:block"
       size={"icon"}
       onClick={toggleSidebar}
     >
@@ -127,7 +128,7 @@ const PlayerSidebarTrigger = () => {
 };
 
 const PlayerSidebarHeader = () => {
-  const { open } = useSidebar();
+  const { open, setOpenMobile } = useSidebar();
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -151,7 +152,26 @@ const PlayerSidebarHeader = () => {
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <button
+        className="md:hidden mr-auto"
+        onClick={() => setOpenMobile(false)}
+      >
+        <XIcon className="size-4" />
+      </button>
     </SidebarHeader>
+  );
+};
+
+const PlayerSidebarFooter = () => {
+  const { open } = useSidebar();
+
+  if (!open) return null;
+
+  return (
+    <SidebarFooter className="bg-player">
+      <LogoutBtn />
+    </SidebarFooter>
   );
 };
 
@@ -168,9 +188,7 @@ export const PlayerSidebar = () => {
         <PlayerSidebarMenu />
       </SidebarContent>
 
-      <SidebarFooter className="bg-player">
-        <LogoutBtn />
-      </SidebarFooter>
+      <PlayerSidebarFooter />
 
       <PlayerSidebarTrigger />
     </Sidebar>
