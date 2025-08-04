@@ -53,7 +53,7 @@ export const Gallery = ({ slides }: GalleryProps) => {
                   alt="gallery"
                   width={800}
                   height={800}
-                  className="size-full object-cover object-center"
+                  className="size-full object-cover object-right"
                 />
 
                 <div className="absolute left-1/2 top-1/2 -translate-1/2 w-full flex flex-col max-md:gap-y-6">

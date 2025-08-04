@@ -1,3 +1,4 @@
+import { MobilePanelSidebarBtn } from "~/components/common/MobilePanelSidebarBtn";
 import { RefereeSidebar } from "~/components/seactions/layout/referee/RefereeSidebar";
 import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 
@@ -9,7 +10,10 @@ const RefereeLayout = ({ children }: RefereeLayoutProps) => {
   return (
     <SidebarProvider>
       <RefereeSidebar />
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset>
+        <MobilePanelSidebarBtn />
+        {children}
+      </SidebarInset>
     </SidebarProvider>
   );
 };

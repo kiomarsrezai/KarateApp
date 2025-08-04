@@ -20,7 +20,7 @@ export const Banner = ({ newsItem }: BannerProps) => {
           alt="club"
           width={800}
           height={800}
-          className="size-full object-cover"
+          className="size-full object-cover object-[0%_75%]"
         />
       </AspectRatio>
     </div>

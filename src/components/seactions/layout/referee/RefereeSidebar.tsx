@@ -10,6 +10,7 @@ import {
   HomeIcon,
   LucideIcon,
   UserRound,
+  XIcon,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -114,7 +115,7 @@ const RefereeSidebarTrigger = () => {
 
   return (
     <Button
-      className="absolute left-0 top-2 rounded-full -translate-x-2/3 size-5 !bg-referee"
+      className="absolute left-0 top-2 rounded-full -translate-x-2/3 size-5 !bg-referee hidden md:block"
       size={"icon"}
       onClick={toggleSidebar}
     >
@@ -128,7 +129,7 @@ const RefereeSidebarTrigger = () => {
 };
 
 const RefereeSidebarHeader = () => {
-  const { open } = useSidebar();
+  const { open, setOpenMobile } = useSidebar();
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -152,7 +153,26 @@ const RefereeSidebarHeader = () => {
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <button
+        className="md:hidden mr-auto"
+        onClick={() => setOpenMobile(false)}
+      >
+        <XIcon className="size-4" />
+      </button>
     </SidebarHeader>
+  );
+};
+
+const RefereeSidebarFooter = () => {
+  const { open } = useSidebar();
+
+  if (!open) return null;
+
+  return (
+    <SidebarFooter className="bg-referee">
+      <LogoutBtn />
+    </SidebarFooter>
   );
 };
 
@@ -168,9 +188,7 @@ export const RefereeSidebar = () => {
       <SidebarContent className="bg-referee text-referee-foreground">
         <RefereeSidebarMenu />
       </SidebarContent>
-      <SidebarFooter className="bg-referee">
-        <LogoutBtn />
-      </SidebarFooter>
+      <RefereeSidebarFooter />
 
       <RefereeSidebarTrigger />
     </Sidebar>
