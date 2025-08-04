@@ -24,6 +24,7 @@ export const Gallery = ({ slides }: GalleryProps) => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const count = 5;
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     if (!api) {
@@ -36,7 +37,7 @@ export const Gallery = ({ slides }: GalleryProps) => {
   }, [api]);
 
   return (
-    <Dialog>
+    <>
       <Carousel
         className="w-full select-none bg-layer text-layer-foreground"
         opts={{ direction: "rtl", loop: true, watchDrag: false }}
@@ -71,11 +72,12 @@ export const Gallery = ({ slides }: GalleryProps) => {
                     <div className="h-[6px] bg-primary flex-1 rounded-s-full"></div>
                   </div>
                   <div className="flex justify-center mt-8">
-                    <DialogTrigger asChild>
-                      <Button className="w-1/2 !rounded-full">
-                        ثبت نام در کلاس های آموزشی
-                      </Button>
-                    </DialogTrigger>
+                    <Button
+                      className="w-1/2 !rounded-full"
+                      onClick={() => setOpenDialog(true)}
+                    >
+                      ثبت نام در کلاس های آموزشی
+                    </Button>
                   </div>
                 </div>
               </Card>
@@ -99,9 +101,11 @@ export const Gallery = ({ slides }: GalleryProps) => {
           </ul>
         </div>
       </Carousel>
-      <DialogContent>
-        <ComingSoon content="این بخش به زودی در دسترس قرار خواهد گرفت" />
-      </DialogContent>
-    </Dialog>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent>
+          <ComingSoon content="این بخش به زودی در دسترس قرار خواهد گرفت" />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
