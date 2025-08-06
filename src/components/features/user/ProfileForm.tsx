@@ -12,6 +12,8 @@ import {
   date,
   number,
   nullable,
+  partialCheck,
+  forward,
 } from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Button } from "~/components/ui/button";
@@ -59,18 +61,32 @@ const FormSchema = pipe(
     refreeFile: nullable(string("فایل ضروری است")),
     coachFile: nullable(string("فایل ضروری است")),
   }),
-  check((input) => {
-    if (input.selectedRoles.includes(3)) {
-      return input.coachFile !== null;
-    }
-    return true;
-  }, "فایل ضروری است"),
-  check((input) => {
-    if (input.selectedRoles.includes(4)) {
-      return input.refreeFile !== null;
-    }
-    return true;
-  }, "فایل ضروری است")
+  forward(
+    partialCheck(
+      [["coachFile"], ["selectedRoles"]],
+      (input) => {
+        if (input.selectedRoles.includes(3) && !input.coachFile) {
+          return false;
+        }
+        return true;
+      },
+      "فایل ضروری است"
+    ),
+    ["coachFile"]
+  ),
+  forward(
+    partialCheck(
+      [["refreeFile"], ["selectedRoles"]],
+      (input) => {
+        if (input.selectedRoles.includes(4) && !input.refreeFile) {
+          return false;
+        }
+        return true;
+      },
+      "فایل ضروری است"
+    ),
+    ["refreeFile"]
+  )
 );
 
 // form
@@ -95,9 +111,9 @@ export const ProfileForm = ({ initValue }: ProfileFormProps) => {
       selectedRoles: initValue.roles as any,
       rezumeFile: initValue.rezumeFile ?? undefined,
       avatar: initValue.avatar ?? undefined,
-      refreeFile: initValue.refreeFile ?? undefined,
-      coachFile: initValue.coachFile ?? undefined,
-    },
+      refreeFile: initValue.refreeFile ?? null,
+      coachFile: initValue.coachFile ?? null,
+    } as any,
   });
 
   // mutation
