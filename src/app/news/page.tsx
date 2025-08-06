@@ -8,7 +8,7 @@ const NewsPage = async () => {
     <div className="mt-10 lg:mt-28 pb-10  container">
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {news.map((newsItem) => (
-          <NewsCard newsItem={newsItem} />
+          <NewsCard newsItem={newsItem} key={newsItem.newsId} />
         ))}
       </div>
     </div>
