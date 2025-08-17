@@ -14,12 +14,12 @@ export const Banner = ({ newsItem }: BannerProps) => {
 
   return (
     <div className="rounded-xl overflow-hidden">
-      <AspectRatio ratio={mobile ? 16 / 9 : 35 / 9}>
+      <AspectRatio ratio={mobile ? 16 / 9 : 20 / 9}>
         <Image
           src={getFilePathWithDefault(newsItem.imageName)}
           alt="club"
-          width={800}
-          height={800}
+          width={1600}
+          height={1600}
           className="size-full object-cover object-[0%_75%]"
         />
       </AspectRatio>
