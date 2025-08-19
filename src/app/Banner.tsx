@@ -42,9 +42,13 @@ const FeaturesContent = () => {
 const BannerContent = () => {
   return (
     <div className="flex flex-col gap-y-12 relative">
-      <p className="text-center md:text-[30px]">
-        پنل کاربری به زودی در دسترس قرار خواهد گرفت
-      </p>
+      <a
+        className="text-center md:text-[30px]"
+        href="/pdf/guide.pdf"
+        target="_blank"
+      >
+        ثبت نام در مسابقات کشوری ۱۴۰۴
+      </a>
 
       <Dialog>
         <DialogTrigger asChild>
