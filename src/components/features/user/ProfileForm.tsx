@@ -131,7 +131,15 @@ export const ProfileForm = ({ initValue }: ProfileFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="flex flex-col gap-y-6">
+      <form
+        onSubmit={onSubmit}
+        className="flex flex-col gap-y-6"
+        style={
+          {
+            "--layer-foreground": "oklch(0 0 0)",
+          } as React.CSSProperties
+        }
+      >
         <UserInfoInputs />
 
         <Button className="rounded-full" loading={mutation.isPending}>

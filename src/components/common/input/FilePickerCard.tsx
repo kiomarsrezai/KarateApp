@@ -1,12 +1,14 @@
 import { UploadIcon } from "lucide-react";
+import Image from "next/image";
 import {
   FileUploaderContainer,
   useFileUploader,
 } from "~/components/features/file/FileUploader";
 import { AnimatedCircularProgressBar } from "~/components/ui/animated-circular-progress-bar";
+import { getFilePathWithDefault } from "~/lib/utils";
 
 const FileCard = () => {
-  const { loading, openFileChooser, uploadedFile, progress } =
+  const { loading, openFileChooser, uploadedFile, progress, value } =
     useFileUploader();
 
   return (
@@ -28,10 +30,23 @@ const FileCard = () => {
           />
         </>
       ) : uploadedFile ? (
-        <div className="text-center">
+        <>
           <p className="text-layer-foreground/50">بارگذاری موفق</p>
-          <p className="mt-1">{`"${uploadedFile.name}"`}</p>
-        </div>
+          <a
+            className="flex items-center gap-2 bg-layer/5 p-2 rounded-2xl hover:bg-layer/8 transition-colors"
+            href={getFilePathWithDefault(value)}
+            target="_blank"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={getFilePathWithDefault(value)}
+              alt="file"
+              width={50}
+              height={50}
+            />
+            <p className="text-sm">{`"${uploadedFile.name}"`}</p>
+          </a>
+        </>
       ) : (
         <>
           <p className="text-layer-foreground/50">بارگذاری فایل</p>
