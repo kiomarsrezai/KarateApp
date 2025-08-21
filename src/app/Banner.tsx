@@ -10,27 +10,34 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 
+type FeatureItem = {
+  text: string;
+  link: string;
+};
+
 // feature components
 const FeaturesContent = () => {
-  const items = [
-    "ثبت نام در سایت و تشکیل پنل کاربری",
-    "به زودی دیگر خدمات در دسترس قرار میگیرد",
+  const items: FeatureItem[] = [
+    { text: "دریافت فایل راهنما", link: "/pdf/guide.pdf" },
+    { text: "لینک ثبت نام", link: "https://www.ikf.ir" },
   ];
   return (
     <DialogContent className="bg-[#FAF3E2]">
       <DialogHeader>
         <DialogTitle className="text-center text-black font-medium">
-          لیست خدمات انجمن شیتوریو کاراته دو ایران
+          دریافت فایل راهنمای ثبت نام و لینک ثبت نام
         </DialogTitle>
       </DialogHeader>
       <DialogMainSection>
         <ul className="flex flex-col gap-y-2">
           {items.map((item, i) => (
             <li key={i}>
-              <div className="flex items-center gap-x-2 text-sm">
-                <ShieldCheckIcon className="size-6 fill-[#79528A] stroke-[#fff]" />
-                {item}
-              </div>
+              <a href={item.link} target="_blank">
+                <div className="flex items-center gap-x-2 text-sm">
+                  <ShieldCheckIcon className="size-6 fill-[#79528A] stroke-[#fff]" />
+                  {item.text}
+                </div>
+              </a>
             </li>
           ))}
         </ul>
@@ -42,19 +49,14 @@ const FeaturesContent = () => {
 const BannerContent = () => {
   return (
     <div className="flex flex-col gap-y-12 relative">
-      <a
-        className="text-center md:text-[30px]"
-        href="/pdf/guide.pdf"
-        target="_blank"
-      >
+      <p className="text-center md:text-[30px]">
         ثبت نام در مسابقات کشوری ۱۴۰۴
-      </a>
-
+      </p>
       <Dialog>
         <DialogTrigger asChild>
           <Button className="rounded-full md:!bg-[#F5E8C7] md:!text-black">
             <InfoIcon className="me-2 md:fill-black md:stroke-[#F5E8C7] size-5" />
-            مشاهده لیست خدمات سایت انجمن
+            دریافت فایل راهنمای ثبت نام و لینک ثبت نام
           </Button>
         </DialogTrigger>
 
