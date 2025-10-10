@@ -8,6 +8,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   HomeIcon,
+  IdCardIcon,
   LucideIcon,
   UserRound,
   XIcon,
@@ -96,6 +97,11 @@ const RefereeSidebarMenu = () => {
       text: "خدمات",
       path: "/dashboard/referee/services",
       icon: BedIcon,
+    },
+    {
+      text: "کارت عضویت",
+      path: "/dashboard/referee/registraion-card",
+      icon: IdCardIcon,
     },
   ];
 
