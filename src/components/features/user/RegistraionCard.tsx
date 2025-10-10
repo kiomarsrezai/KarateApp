@@ -1,6 +1,37 @@
+"use client";
+
+import { Logo } from "~/components/common/Logo";
+import { User } from "./types";
+
+import React, { createContext, useContext } from "react";
+import { getFullName, getRoleByValue } from "./utils";
+
+type CardContextType = {
+  user: User;
+};
+
+const CardContext = createContext<CardContextType | undefined>(undefined);
+
+type CardProviderProps = {
+  user: User;
+  children: React.ReactNode;
+};
+
+const UserProvider = ({ user, children }: CardProviderProps) => (
+  <CardContext.Provider value={{ user }}>{children}</CardContext.Provider>
+);
+
+export const useCardContext = () => {
+  const context = useContext(CardContext);
+  if (context === undefined) {
+    throw new Error("useUserContext must be used within a UserProvider");
+  }
+  return context;
+};
+
 type ContentShape = {
   label: string;
-  value: string;
+  value: string | null | undefined;
 };
 
 type ContentItemProps = {
@@ -9,29 +40,35 @@ type ContentItemProps = {
 const ContentItem = ({ data }: ContentItemProps) => {
   return (
     <li>
-      <div>{data.label}</div>
-      <div>{data.value}</div>
+      <h6 className="text-xs">{data.label}:</h6>
+      <p className="font-medium text-lg mt-1">{data.value}</p>
     </li>
   );
 };
 
 const ContentList = () => {
+  const { user } = useCardContext();
+  const roles = user.roles
+    .filter((role) => role !== 1)
+    .map((role) => getRoleByValue(role))
+    .map((role) => role?.label)
+    .join("، ");
   const items: ContentShape[] = [
     {
       label: "نام و نام خانوادگی",
-      value: "Salam",
+      value: getFullName(user),
     },
     {
       label: "سمت",
-      value: "Salam",
+      value: roles,
     },
     {
       label: "کمربند (درجه)",
-      value: "Salam",
+      value: "-",
     },
     {
       label: "اعتبار عضویت",
-      value: "Salam",
+      value: "-",
     },
   ];
   return (
@@ -42,10 +79,39 @@ const ContentList = () => {
     </ul>
   );
 };
-export const RegistraionCard = () => {
+
+const CardHeader = () => {
   return (
-    <div className="w-[400px] bg-[#d72638] text-white rounded-4xl overflow-hidden">
-      <ContentList />
+    <div className="flex items-center gap-4 bg-[#70131e] p-4">
+      <Logo />
+      <h3 className="font-bold text-xl">انجمن شیتوریو کاراته دو ایران</h3>
     </div>
+  );
+};
+
+const CardFooter = () => {
+  return (
+    <div className="flex items-center gap-4 bg-[#70131e] p-4">
+      <Logo />
+      <h3 className="font-bold text-xl">انجمن شیتوریو کاراته دو ایران</h3>
+    </div>
+  );
+};
+
+type RegistraionCardProps = {
+  user: User;
+};
+export const RegistraionCard = ({ user }: RegistraionCardProps) => {
+  console.log(user);
+  return (
+    <CardContext value={{ user }}>
+      <div className="w-[400px] bg-[#d72638] text-white rounded-4xl overflow-hidden">
+        <CardHeader />
+        <div className="p-4">
+          <ContentList />
+        </div>
+        <CardFooter />
+      </div>
+    </CardContext>
   );
 };
