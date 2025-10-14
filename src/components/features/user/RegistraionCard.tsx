@@ -2,9 +2,11 @@
 
 import { Logo } from "~/components/common/Logo";
 import { User } from "./types";
+import { QRCodeSVG } from "qrcode.react";
 
 import React, { createContext, useContext } from "react";
 import { getFullName, getRoleByValue } from "./utils";
+import Image from "next/image";
 
 type CardContextType = {
   user: User;
@@ -72,11 +74,23 @@ const ContentList = () => {
     },
   ];
   return (
-    <ul className="flex flex-col gap-4">
-      {items.map((item, i) => (
-        <ContentItem key={i} data={item} />
-      ))}
-    </ul>
+    <div className="flex justify-between">
+      <ul className="flex flex-col gap-4">
+        {items.map((item, i) => (
+          <ContentItem key={i} data={item} />
+        ))}
+      </ul>
+
+      <div>
+        <Image
+          src={"/img/default-profile.png"}
+          width={40}
+          height={40}
+          alt="avatar"
+          className="w-20 object-cover object-center"
+        />
+      </div>
+    </div>
   );
 };
 
@@ -92,8 +106,8 @@ const CardHeader = () => {
 const CardFooter = () => {
   return (
     <div className="flex items-center gap-4 bg-[#70131e] p-4">
-      <Logo />
-      <h3 className="font-bold text-xl">انجمن شیتوریو کاراته دو ایران</h3>
+      {/* <Logo />
+      <h3 className="font-bold text-xl">انجمن شیتوریو کاراته دو ایران</h3> */}
     </div>
   );
 };
@@ -110,6 +124,10 @@ export const RegistraionCard = ({ user }: RegistraionCardProps) => {
         <div className="p-4">
           <ContentList />
         </div>
+        <div className="flex justify-center mt-6 mb-10">
+          <QRCodeSVG value={process.env.NEXT_PUBLIC_FRONT_URL} />
+        </div>
+
         <CardFooter />
       </div>
     </CardContext>
