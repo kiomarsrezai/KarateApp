@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { RegistraionCard } from "~/components/features/user/RegistraionCard";
+import { DashboardNotConfirmedByAdmin } from "~/components/seactions/layout/DashboardNotConfirmedByAdmin";
 import { Button } from "~/components/ui/button";
 import { useToImage } from "~/hooks/use-to-image";
 
@@ -9,6 +10,8 @@ export const PageContent = () => {
   const { data: session } = useSession();
   const user = session?.user;
   const { ref, toImage, isPending } = useToImage();
+
+  if (!user?.adminConfirm) return <DashboardNotConfirmedByAdmin />;
 
   return (
     <div>

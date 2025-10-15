@@ -4,6 +4,7 @@ export type User = {
   emailVerfied: Date;
   token: string;
   name: null | string;
+  adminConfirm: true;
   family: null | string;
   fatherName: null | string;
   phoneNumber: string;

@@ -52,7 +52,7 @@ const BannerContent = () => {
       <p className="text-center md:text-[30px]">
         ثبت نام در مسابقات کشوری ۱۴۰۴
       </p>
-      <Dialog>
+      {/* <Dialog>
         <DialogTrigger asChild>
           <Button className="rounded-full md:!bg-[#F5E8C7] md:!text-black">
             <InfoIcon className="me-2 md:fill-black md:stroke-[#F5E8C7] size-5" />
@@ -61,7 +61,7 @@ const BannerContent = () => {
         </DialogTrigger>
 
         <FeaturesContent />
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 };
