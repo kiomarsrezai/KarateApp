@@ -8,6 +8,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   HomeIcon,
+  IdCardIcon,
   LucideIcon,
   UserRound,
   XIcon,
@@ -95,6 +96,11 @@ const PlayerSidebarMenu = () => {
       text: "خدمات",
       path: "/dashboard/player/services",
       icon: BedIcon,
+    },
+    {
+      text: "کارت عضویت",
+      path: "/dashboard/player/registraion-card",
+      icon: IdCardIcon,
     },
   ];
 

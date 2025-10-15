@@ -8,6 +8,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   HomeIcon,
+  IdCardIcon,
   LucideIcon,
   UserRound,
   XIcon,
@@ -95,6 +96,11 @@ const CoachSidebarMenu = () => {
       text: "خدمات",
       path: "/dashboard/coach/services",
       icon: BedIcon,
+    },
+    {
+      text: "کارت عضویت",
+      path: "/dashboard/coach/registraion-card",
+      icon: IdCardIcon,
     },
   ];
 
