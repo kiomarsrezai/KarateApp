@@ -5,6 +5,7 @@ export type User = {
   token: string;
   name: null | string;
   adminConfirm: true;
+  MemberShipExpiryDate: null | Date;
   family: null | string;
   fatherName: null | string;
   phoneNumber: string;

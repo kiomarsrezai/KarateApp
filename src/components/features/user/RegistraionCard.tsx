@@ -7,6 +7,7 @@ import { QRCodeSVG } from "qrcode.react";
 import React, { createContext, useContext } from "react";
 import { getFullName, getRoleByValue } from "./utils";
 import Image from "next/image";
+import { formatDate } from "date-fns-jalali";
 
 type CardContextType = {
   user: User;
@@ -70,7 +71,9 @@ const ContentList = () => {
     },
     {
       label: "اعتبار عضویت",
-      value: "-",
+      value: user.MemberShipExpiryDate
+        ? formatDate(user.MemberShipExpiryDate, "PPP")
+        : "-",
     },
   ];
   return (
