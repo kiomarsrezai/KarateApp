@@ -116,7 +116,6 @@ type RegistraionCardProps = {
   user: User;
 };
 export const RegistraionCard = ({ user }: RegistraionCardProps) => {
-  console.log(user);
   return (
     <CardContext value={{ user }}>
       <div className="w-[400px] bg-[#d72638] text-white rounded-4xl overflow-hidden">
