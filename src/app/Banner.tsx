@@ -50,7 +50,7 @@ const BannerContent = () => {
   return (
     <div className="flex flex-col gap-y-12 relative">
       <p className="text-center md:text-[30px]">
-        ثبت نام در مسابقات کشوری ۱۴۰۴
+      {/*  ثبت نام در مسابقات کشوری ۱۴۰۴*/}
       </p>
       {/* <Dialog>
         <DialogTrigger asChild>
