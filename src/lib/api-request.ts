@@ -31,13 +31,22 @@ type Options = {
   params?: Record<string, string>;
 };
 
+const normalizeApiUrl = (url: string): string => {
+  // اگر در browser هستیم و URL با http:// شروع می‌شه، به https:// تبدیل می‌کنیم
+  if (typeof window !== "undefined" && url.startsWith("http://")) {
+    return url.replace("http://", "https://");
+  }
+  return url;
+};
+
 export const apiRequest = async <T>(
   url: string,
   options: Options = {}
 ): Promise<T> => {
   const method = options.method ?? "GET";
   const token = options.forceToken ?? (await getToken());
-  const formattedUrl = process.env.NEXT_PUBLIC_API_URL + url;
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  const formattedUrl = normalizeApiUrl(baseUrl + url);
 
   const headers: Record<string, string> = {};
   if (token) headers["Authorization"] = `Bearer ${token}`;
