@@ -32,12 +32,20 @@ type Options = {
 };
 
 // تابع برای تبدیل HTTP به HTTPS در production (حل مشکل Mixed Content)
+// اما فقط اگر در HTTPS باشیم (نه localhost)
 const normalizeApiUrl = (url: string): string => {
   // اگر URL خالی یا undefined باشه، return می‌کنیم
   if (!url) return url;
   
-  // اگر در browser هستیم و URL با http:// شروع می‌شه (نه http://localhost)، به https:// تبدیل می‌کنیم
-  if (typeof window !== "undefined" && url.startsWith("http://") && !url.includes("localhost")) {
+  // فقط در browser و فقط اگر خود صفحه HTTPS باشه (نه localhost)
+  if (
+    typeof window !== "undefined" && 
+    window.location.protocol === "https:" &&
+    url.startsWith("http://") && 
+    !url.includes("localhost") &&
+    !url.includes("127.0.0.1")
+  ) {
+    // تبدیل به HTTPS فقط اگر خود صفحه HTTPS باشه
     return url.replace("http://", "https://");
   }
   return url;
@@ -81,11 +89,35 @@ export const apiRequest = async <T>(
     return response.data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    // اگر خطای 502 یا ERR_BAD_GATEWAY باشه و URL HTTPS باشه، سعی می‌کنیم با HTTP دوباره تلاش کنیم
+    if (
+      (error.code === "ERR_BAD_GATEWAY" || 
+       error.response?.status === 502 ||
+       error.message?.includes("502")) &&
+      formattedUrl.startsWith("https://") &&
+      typeof window !== "undefined"
+    ) {
+      // Fallback به HTTP
+      const httpUrl = formattedUrl.replace("https://", "http://");
+      console.warn(`HTTPS failed, retrying with HTTP: ${httpUrl}`);
+      
+      try {
+        const fallbackOptions = { ...axiosOptions, url: httpUrl };
+        const fallbackResponse = await axios(fallbackOptions);
+        return fallbackResponse.data;
+      } catch (fallbackError: any) {
+        // اگر HTTP هم fail کرد، خطای اصلی رو برمی‌گردونیم
+        console.error("HTTP fallback also failed:", fallbackError);
+      }
+    }
+
     let errorMsg = "Unexpected error";
 
     // بررسی خطای Mixed Content یا CORS
     if (error.code === "ERR_BLOCKED_BY_CLIENT" || error.message?.includes("Mixed Content")) {
       errorMsg = "خطا در اتصال به سرور. لطفاً از HTTPS استفاده کنید.";
+    } else if (error.response?.status === 502) {
+      errorMsg = "سرور در دسترس نیست. لطفاً بعداً تلاش کنید.";
     } else if (error.response?.data) {
       const errData = error.response.data as ErrorShape;
       errorMsg = Array.isArray(errData.message)
