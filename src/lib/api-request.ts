@@ -98,7 +98,7 @@ export const apiRequest = async <T>(
       typeof window !== "undefined"
     ) {
       // Fallback به HTTP
-      const httpUrl = formattedUrl.replace("https://", "http://");
+      const httpUrl = formattedUrl.replace("https://", "https://");
       console.warn(`HTTPS failed, retrying with HTTP: ${httpUrl}`);
       
       try {
