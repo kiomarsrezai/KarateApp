@@ -169,10 +169,12 @@ const SocialMediaItem = ({ icon: Icon }: SocialMediaShape) => {
     <li>
       <Button asChild>
         <a
-          href="http://google.com"
-          target="_blank"
-          className="!size-9 bg-transparent lg:bg-primary"
-        >
+  href="https://google.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="!size-9 bg-transparent lg:bg-primary"
+>
+
           <Icon className="size-4 lg:size-[25px]" />
         </a>
       </Button>
