@@ -63,14 +63,21 @@ export const authConfig = {
         return prevData;
       }
 
-      const jwt = prevData.sub;
-      const findedUser = await getUserByToken(jwt);
+      try {
+        const jwt = prevData.sub;
+        const findedUser = await getUserByToken(jwt);
 
-      return {
-        ...prevData,
-        ...findedUser,
-        token: jwt,
-      };
+        return {
+          ...prevData,
+          ...findedUser,
+          token: jwt,
+        };
+      } catch (error) {
+        // اگر خطا در دریافت اطلاعات کاربر رخ داد، token رو برمی‌گردونیم بدون user data
+        // این باعث می‌شه که session به "unauthenticated" تبدیل بشه نه "loading"
+        console.error("Error fetching user data:", error);
+        return prevData;
+      }
     },
     session: async ({ session, token }) => {
       if (token) {

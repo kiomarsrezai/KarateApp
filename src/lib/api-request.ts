@@ -31,9 +31,13 @@ type Options = {
   params?: Record<string, string>;
 };
 
+// تابع برای تبدیل HTTP به HTTPS در production (حل مشکل Mixed Content)
 const normalizeApiUrl = (url: string): string => {
-  // اگر در browser هستیم و URL با http:// شروع می‌شه، به https:// تبدیل می‌کنیم
-  if (typeof window !== "undefined" && url.startsWith("http://")) {
+  // اگر URL خالی یا undefined باشه، return می‌کنیم
+  if (!url) return url;
+  
+  // اگر در browser هستیم و URL با http:// شروع می‌شه (نه http://localhost)، به https:// تبدیل می‌کنیم
+  if (typeof window !== "undefined" && url.startsWith("http://") && !url.includes("localhost")) {
     return url.replace("http://", "https://");
   }
   return url;
@@ -47,6 +51,11 @@ export const apiRequest = async <T>(
   const token = options.forceToken ?? (await getToken());
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
   const formattedUrl = normalizeApiUrl(baseUrl + url);
+  
+  // اگر URL خالی باشه، خطا می‌دهیم
+  if (!formattedUrl) {
+    throw new Error("API URL is not configured. Please set NEXT_PUBLIC_API_URL environment variable.");
+  }
 
   const headers: Record<string, string> = {};
   if (token) headers["Authorization"] = `Bearer ${token}`;
@@ -74,7 +83,10 @@ export const apiRequest = async <T>(
   } catch (error: any) {
     let errorMsg = "Unexpected error";
 
-    if (error.response?.data) {
+    // بررسی خطای Mixed Content یا CORS
+    if (error.code === "ERR_BLOCKED_BY_CLIENT" || error.message?.includes("Mixed Content")) {
+      errorMsg = "خطا در اتصال به سرور. لطفاً از HTTPS استفاده کنید.";
+    } else if (error.response?.data) {
       const errData = error.response.data as ErrorShape;
       errorMsg = Array.isArray(errData.message)
         ? errData.message[0]
@@ -83,6 +95,7 @@ export const apiRequest = async <T>(
       errorMsg = error.message;
     }
 
+    // فقط در browser toast نمایش بده
     if (typeof window !== "undefined") {
       toast.error(errorMsg);
     }
