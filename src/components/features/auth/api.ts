@@ -28,11 +28,13 @@ type VerifyOtpBody = {
 };
 
 type VerifyOtpResult = {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
 };
 
 export const verifyOtpApi = async (data: VerifyOtpBody) => {
-  const res = apiRequest<VerifyOtpResult>("/User/verifyotp", {
+  const res = await apiRequest<VerifyOtpResult>("/User/VerifyOtp", {
     method: "POST",
     body: {
       dto: data,

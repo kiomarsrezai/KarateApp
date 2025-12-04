@@ -28,7 +28,7 @@ import { useAuthStore } from "./useAuthStore";
 import { toast } from "sonner";
 import { getRoleByValue } from "../../user/utils";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 const CODE_LENGTH = 4;
 
@@ -59,24 +59,49 @@ export const OtpForm = ({ onNext, onPrev, onDone }: PhoneNumberFormProps) => {
   // mutation
   const authStore = useAuthStore();
   const router = useRouter();
+  const { update: updateSession } = useSession();
+  
   const mutation = useMutation({
     mutationFn: async (
       data: InferInput<typeof FormSchema> & { phoneNumber: string }
     ) => {
       const res = await verifyOtpApi(data);
-      const user = await getUserByToken(res.token);
+      const user = await getUserByToken(res.accessToken);
       if (user.isProfileCompleted) {
-        await signIn("credentials", { redirect: false, token: res.token });
+        // Sign in با NextAuth
+        const result = await signIn("credentials", { 
+          redirect: false, 
+          token: res.accessToken 
+        });
+        
+        // اگر signIn موفق بود، session رو refresh می‌کنیم
+        if (result?.ok) {
+          await updateSession();
+        }
       }
-      return { ...res, registered: user.isProfileCompleted, roles: user.roles };
+      return { 
+        ...res, 
+        token: res.accessToken,
+        registered: user.isProfileCompleted, 
+        roles: user.roles 
+      };
     },
     onSuccess(res) {
       if (res.registered) {
         toast.success("به انجمن شیتوریو دو ایران خوش آمدید");
         onDone();
-        const role = getRoleByValue(res?.roles?.[0]);
-        if (!role) return;
-        router.push(role.path);
+        
+        // کمی delay می‌ذاریم تا session به‌روز بشه
+        setTimeout(() => {
+          const role = getRoleByValue(res?.roles?.[0]);
+          if (!role) {
+            toast.error("نقش کاربری یافت نشد");
+            return;
+          }
+          router.push(role.path);
+          // Force refresh برای اطمینان از به‌روزرسانی session
+          router.refresh();
+        }, 500);
       } else {
         authStore.setToken(res.token);
         onNext();
