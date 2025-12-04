@@ -31,24 +31,36 @@ type Options = {
   params?: Record<string, string>;
 };
 
-// تابع برای تبدیل HTTP به HTTPS در production (حل مشکل Mixed Content)
-// اما فقط اگر در HTTPS باشیم (نه localhost)
-const normalizeApiUrl = (url: string): string => {
-  // اگر URL خالی یا undefined باشه، return می‌کنیم
-  if (!url) return url;
-  
-  // فقط در browser و فقط اگر خود صفحه HTTPS باشه (نه localhost)
-  if (
-    typeof window !== "undefined" && 
-    window.location.protocol === "https:" &&
-    url.startsWith("https://") && 
-    !url.includes("localhost") &&
-    !url.includes("127.0.0.1")
-  ) {
-    // تبدیل به HTTPS فقط اگر خود صفحه HTTPS باشه
-    return url.replace("https://", "https://");
+/**
+ * ساخت امن URL برای API:
+ *  - اضافه کردن / بین base و path
+ *  - تبدیل http به https برای دامنه‌های غیر localhost
+ */
+const buildApiUrl = (path: string): string => {
+  const rawBase = process.env.NEXT_PUBLIC_API_URL || "";
+
+  if (!rawBase) {
+    throw new Error(
+      "API URL is not configured. Please set NEXT_PUBLIC_API_URL environment variable."
+    );
   }
-  return url;
+
+  // حذف / های انتهای base
+  let base = rawBase.replace(/\/+$/, "");
+
+  // تبدیل http به https برای سرورهای واقعی
+  if (
+    base.startsWith("http://") &&
+    !base.includes("localhost") &&
+    !base.includes("127.0.0.1")
+  ) {
+    base = "https://" + base.substring("http://".length);
+  }
+
+  // اطمینان از اینکه path با / شروع می‌شود
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+
+  return `${base}${cleanPath}`;
 };
 
 export const apiRequest = async <T>(
@@ -57,13 +69,8 @@ export const apiRequest = async <T>(
 ): Promise<T> => {
   const method = options.method ?? "GET";
   const token = options.forceToken ?? (await getToken());
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
-  const formattedUrl = normalizeApiUrl(baseUrl + url);
-  
-  // اگر URL خالی باشه، خطا می‌دهیم
-  if (!formattedUrl) {
-    throw new Error("API URL is not configured. Please set NEXT_PUBLIC_API_URL environment variable.");
-  }
+
+  const formattedUrl = buildApiUrl(url);
 
   const headers: Record<string, string> = {};
   if (token) headers["Authorization"] = `Bearer ${token}`;
@@ -78,7 +85,9 @@ export const apiRequest = async <T>(
     timeout: 60_000,
     onUploadProgress: options.onUploadProgress
       ? (event) => {
-          const percent = Math.round((event.loaded / (event.total ?? 1)) * 100);
+          const percent = Math.round(
+            (event.loaded / (event.total ?? 1)) * 100
+          );
           options.onUploadProgress?.(percent);
         }
       : undefined,
@@ -87,34 +96,15 @@ export const apiRequest = async <T>(
   try {
     const response: AxiosResponse<T> = await axios(axiosOptions);
     return response.data;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    // اگر خطای 502 یا ERR_BAD_GATEWAY باشه و URL HTTPS باشه، سعی می‌کنیم با HTTP دوباره تلاش کنیم
-    if (
-      (error.code === "ERR_BAD_GATEWAY" || 
-       error.response?.status === 502 ||
-       error.message?.includes("502")) &&
-      formattedUrl.startsWith("https://") &&
-      typeof window !== "undefined"
-    ) {
-      // Fallback به HTTP
-      const httpUrl = formattedUrl.replace("https://", "https://");
-      console.warn(`HTTPS failed, retrying with HTTP: ${httpUrl}`);
-      
-      try {
-        const fallbackOptions = { ...axiosOptions, url: httpUrl };
-        const fallbackResponse = await axios(fallbackOptions);
-        return fallbackResponse.data;
-      } catch (fallbackError: any) {
-        // اگر HTTP هم fail کرد، خطای اصلی رو برمی‌گردونیم
-        console.error("HTTP fallback also failed:", fallbackError);
-      }
-    }
-
+  } 
+  catch (error: any) {
     let errorMsg = "Unexpected error";
 
-    // بررسی خطای Mixed Content یا CORS
-    if (error.code === "ERR_BLOCKED_BY_CLIENT" || error.message?.includes("Mixed Content")) {
+    // خطای Mixed Content یا بلاک شدن
+    if (
+      error.code === "ERR_BLOCKED_BY_CLIENT" ||
+      error.message?.includes("Mixed Content")
+    ) {
       errorMsg = "خطا در اتصال به سرور. لطفاً از HTTPS استفاده کنید.";
     } else if (error.response?.status === 502) {
       errorMsg = "سرور در دسترس نیست. لطفاً بعداً تلاش کنید.";
@@ -123,11 +113,11 @@ export const apiRequest = async <T>(
       errorMsg = Array.isArray(errData.message)
         ? errData.message[0]
         : errData.message;
-    } else if (error.message) {
+    } 
+    else if (error.message) {
       errorMsg = error.message;
     }
-
-    // فقط در browser toast نمایش بده
+    
     if (typeof window !== "undefined") {
       toast.error(errorMsg);
     }
