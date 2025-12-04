@@ -41,12 +41,12 @@ const normalizeApiUrl = (url: string): string => {
   if (
     typeof window !== "undefined" && 
     window.location.protocol === "https:" &&
-    url.startsWith("http://") && 
+    url.startsWith("https://") && 
     !url.includes("localhost") &&
     !url.includes("127.0.0.1")
   ) {
     // تبدیل به HTTPS فقط اگر خود صفحه HTTPS باشه
-    return url.replace("http://", "https://");
+    return url.replace("https://", "https://");
   }
   return url;
 };
