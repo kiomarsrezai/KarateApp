@@ -66,6 +66,10 @@ const HeaderMenu = () => {
       text: "آموزش",
     },
     {
+      link: "/dashboard/player/exam-request", // ⬅️ مسیر فرم درخواست در پنل ورزشکار
+      text: "درخواست آزمون",
+    },
+    {
       link: "/news",
       text: "اخبار",
     },
